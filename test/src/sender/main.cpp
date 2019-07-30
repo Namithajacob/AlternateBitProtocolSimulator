@@ -1,0 +1,24 @@
+Unstaged changes after reset:
+D	Cadmium_Documentation_Ubuntu.pdf
+D	Cadmium_Windows.pdf
+D	alternatebitprot.pdf
+D	atomics/receiverCadmium.hpp
+D	atomics/senderCadmium.hpp
+D	atomics/subnetCadmium.hpp
+D	data_structures/message.cpp
+D	data_structures/message.hpp
+D	test/receiver/main.cpp
+D	test/receiver/makefile
+D	test/receiver/receiver_input_test.txt
+D	test/receiver/receiver_test_output.txt
+D	test/sender/main.cpp
+D	test/sender/makefile
+D	test/sender/sender_input_test_ack_In.txt
+D	test/sender/sender_input_test_control_In.txt
+D	test/sender/sender_test_output.txt
+M	test/src/sender/main.cpp
+D	test/subnet/main.cpp
+D	test/subnet/makefile
+D	test/subnet/subnet_input_test.txt
+D	test/subnet/subnet_test_output.txt
+D	top_model/main.cpp
