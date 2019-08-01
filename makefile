@@ -4,7 +4,7 @@ $(shell mkdir -p build)
 CC=g++
 CFLAGS=-std=c++17
 
-INCLUDECADMIUM=-I ../../lib/cadmium
+INCLUDECADMIUM=-I lib/cadmium/include
 
 all:build/receiver_text.o build/sender_text.o build/subnet_text.o build/main_text.o build/message.o
 	$(CC) -g -o bin/RECEIVER build/receiver_text.o build/message.o
