@@ -14,8 +14,8 @@
 #include <cadmium/logger/common_loggers.hpp>
 
 #include "../../../include/message.hpp"
-#include "../../../vendor/NDTime.hpp"
-#include "../../../vendor/iestream.hpp"
+#include "../../../lib/vendor/include/NDTime.hpp"
+#include "../../../lib/vendor/include/iestream.hpp"
 
 
 #include "../../../include/receiverCadmium.hpp"
