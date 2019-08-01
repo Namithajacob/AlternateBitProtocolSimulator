@@ -15,8 +15,8 @@
 #include "../../include/message.hpp"
 
 
-#include "../../vendor/NDTime.hpp"
-#include "../../vendor/iestream.hpp"
+#include "../../lib/vendor/NDTime.hpp"
+#include "../../lib/vendor/include/iestream.hpp"
 
 #include "../../include/receiverCadmium.hpp"
 #include "../../include/senderCadmium.hpp"
@@ -62,7 +62,7 @@ int main(int argc, char ** argv) {
   auto start = hclock::now(); //to measure simulation execution time
 
 /*************** Loggers *******************/
-  static std::ofstream out_data("abp_output.txt");
+  static std::ofstream out_data("../../data/abp_output.txt");
     struct oss_sink_provider{
         static std::ostream& sink(){          
             return out_data;
