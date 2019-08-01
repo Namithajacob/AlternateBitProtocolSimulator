@@ -28,8 +28,12 @@ include - This folder consists of  header files used in the code.
 		 message.hpp	
 				
 lib - This folder contains third-party library files.
-		 cadmium (This folder contains the cadmium library files)
-		 DESTimes (This folder contains the DESTimes library files)
+		 cadmium -This folder contains the cadmium library files
+		 DESTimes -This folder contains the DESTimes library files
+		 vendor - This folder contains 3rd party header files needed in the project
+			-include - contains header files
+				iestream.hpp
+				NDTime.hpp
 
 src - This folder contains the source files(.cpp)
 		 message 
@@ -63,9 +67,7 @@ test - This folder contains files for the unit tests
 			- subnet-This folder contains source code for the subnet
 				main.cpp
 
-vendor - This folder contains 3rd party header files needed in the project
-		iestream.hpp
-		NDTime.hpp
+
 
 
 	
