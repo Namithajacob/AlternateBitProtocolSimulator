@@ -16,7 +16,7 @@
 #include "../../../include/message.hpp"
 #include "../../../lib/vendor/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
-#include "../../../include/receiverCadmium.hpp"
+#include "../../../include/receivercadmium.hpp"
 
 using namespace std;
 using hclock=chrono::high_resolution_clock;
@@ -37,7 +37,8 @@ template<typename T>
 class ApplicationGen : public iestream_input<Message_t,T>{
     public:
     ApplicationGen() = default;
-    ApplicationGen(const char* file_path) : iestream_input<Message_t,T>(file_path) {}
+    ApplicationGen(const char* file_path) : iestream_input<Message_t,
+        T>(file_path) {}
     };
 
 
@@ -46,7 +47,8 @@ int main(){
     auto start = hclock::now(); //to measure simulation execution time
 
 /*************** Loggers *******************/
-    static std::ofstream out_data("test/data/receiver/receiver_test_output.txt");
+    static std::ofstream out_data
+	    ("test/data/receiver/receiver_test_output.txt");
     struct oss_sink_provider{
         static std::ostream& sink(){          
             return out_data;
@@ -54,21 +56,28 @@ int main(){
     };
 
     using info=cadmium::logger::logger<cadmium::logger::logger_info,
-    		   cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
+    		   cadmium::dynamic::logger::formatter<TIME>,
+			   oss_sink_provider>;
     using debug=cadmium::logger::logger<cadmium::logger::logger_debug,
-    		    cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
+    		    cadmium::dynamic::logger::formatter<TIME>,
+				oss_sink_provider>;
     using state=cadmium::logger::logger<cadmium::logger::logger_state,
-    		    cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
+    		    cadmium::dynamic::logger::formatter<TIME>,
+				oss_sink_provider>;
     using log_messages=cadmium::logger::logger<cadmium::logger::logger_messages,
-    		           cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
+    		           cadmium::dynamic::logger::formatter<TIME>,
+					   oss_sink_provider>;
     using routing=cadmium::logger::logger<cadmium::logger::logger_message_routing,
-    		      cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
+    		      cadmium::dynamic::logger::formatter<TIME>,
+				  oss_sink_provider>;
     using global_time=cadmium::logger::logger<cadmium::logger::logger_global_time,
-    		          cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
+    		          cadmium::dynamic::logger::formatter<TIME>,
+					  oss_sink_provider>;
     using local_time=cadmium::logger::logger<cadmium::logger::logger_local_time,
-    		         cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
-    using log_all=cadmium::logger::multilogger<info, debug, state, log_messages,
-    		      routing, global_time, local_time>;
+    		         cadmium::dynamic::logger::formatter<TIME>,
+					 oss_sink_provider>;
+    using log_all=cadmium::logger::multilogger<info, debug, state,
+    		      log_messages,routing, global_time, local_time>;
 
     using logger_top=cadmium::logger::multilogger<log_messages, global_time>;
 
@@ -83,15 +92,16 @@ int main(){
     string input_data_control = "/test/data/receiver/receiver_input_test.txt";
     const char * i_input_data_control = input_data_control.c_str();
     std::shared_ptr<cadmium::dynamic::modeling::model> generator =
-    		cadmium::dynamic::translate::make_dynamic_atomic_model<ApplicationGen,
-			TIME, const char* >("generator" , std::move(i_input_data_control));
+        cadmium::dynamic::translate::make_dynamic_atomic_model<ApplicationGen,
+		TIME, const char* >("generator" , std::move(i_input_data_control));
 
 /********************************************/
 /****** RECIEVER *******************/
 /********************************************/
 
     std::shared_ptr<cadmium::dynamic::modeling::model> receiver1 =
-    		cadmium::dynamic::translate::make_dynamic_atomic_model<Receiver, TIME>("receiver1");
+    	cadmium::dynamic::translate::make_dynamic_atomic_model<Receiver,
+		TIME>("receiver1");
 
 
 /************************/
@@ -102,7 +112,8 @@ int main(){
     cadmium::dynamic::modeling::Models submodels_TOP = {generator, receiver1};
     cadmium::dynamic::modeling::EICs eics_TOP = {};
     cadmium::dynamic::modeling::EOCs eocs_TOP = {
-        cadmium::dynamic::translate::make_EOC<receiver_defs::output,output>("receiver1")
+        cadmium::dynamic::translate::make_EOC<receiver_defs::output,
+		output>("receiver1")
     };
 
     cadmium::dynamic::modeling::ICs ics_TOP = {
