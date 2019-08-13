@@ -4,8 +4,8 @@
 *
 */
 
-#ifndef BOOST_SIMULATION_PDEVS_SUBNET_HPP
-#define BOOST_SIMULATION_PDEVS_SUBNET_HPP
+#ifndef __BOOST_SIMULATION_PDEVS_SUBNET_HPP__
+#define __BOOST_SIMULATION_PDEVS_SUBNET_HPP__
 
 #include <cadmium/modeling/ports.hpp>
 #include <cadmium/modeling/message_bag.hpp>
@@ -39,7 +39,7 @@ template<typename TIME>
 class Subnet{
     using defs=subnet_defs; // putting definitions in context
     public:
-    //Parameters to be overwriten when instantiating the atomic model
+    //Parameters to be overwritten when instantiating the atomic model
            
     // default constructor
     Subnet() noexcept{
@@ -116,4 +116,4 @@ class Subnet{
         return os;
     }
 };
-#endif // BOOST_SIMULATION_PDEVS_SUBNET_HPP
+#endif // __BOOST_SIMULATION_PDEVS_SUBNET_HPP__
