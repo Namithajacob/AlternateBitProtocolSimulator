@@ -79,8 +79,8 @@ class Subnet{
     // confluence transition
     void confluence_transition(TIME e,
         typename make_message_bags<input_ports>::type mbs) {
-        internal_transition();
-        external_transition(TIME(), std::move(mbs));
+            internal_transition();
+            external_transition(TIME(), std::move(mbs));
     }
 
     // output function

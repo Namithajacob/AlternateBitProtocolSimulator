@@ -16,7 +16,7 @@
 #include "../../../include/message.hpp"
 #include "../../../lib/vendor/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
-#include "../../../include/receivercadmium.hpp"
+#include "../../../include/receiver_cadmium.hpp"
 
 using namespace std;
 using hclock=chrono::high_resolution_clock;

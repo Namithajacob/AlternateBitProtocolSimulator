@@ -18,7 +18,7 @@
 #include "../../../lib/vendor/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
 
-#include "../../../include/subnetCadmium.hpp"
+#include "../../../include/subnet_cadmium.hpp"
 
 using namespace std;
 
