@@ -4,8 +4,8 @@
 *
 */
 
-#ifndef __BOOST_SIMULATION_PDEVS_SUBNET_HPP__
-#define __BOOST_SIMULATION_PDEVS_SUBNET_HPP__
+#ifndef __SUBNET_HPP__
+#define __SUBNET_HPP__
 
 #include <cadmium/modeling/ports.hpp>
 #include <cadmium/modeling/message_bag.hpp>
@@ -104,9 +104,10 @@ class Subnet{
 			{0, 0, static_cast < int > (round(distribution(generator)))};
             // time is hour min and second
             next_internal = TIME(time);
-        }else {
+        }
+		else{
              next_internal = std::numeric_limits<TIME>::infinity();
-         }
+        }
         return next_internal;
     }
 
@@ -116,4 +117,4 @@ class Subnet{
         return os;
     }
 };
-#endif // __BOOST_SIMULATION_PDEVS_SUBNET_HPP__
+#endif // __SUBNET_HPP__

@@ -39,7 +39,7 @@ class ApplicationGen : public iestream_input<Message_t,T>{
     ApplicationGen() = default;
     ApplicationGen(const char* file_path) : iestream_input<Message_t,
         T>(file_path) {}
-    };
+};
 
 
 int main(){

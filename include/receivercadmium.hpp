@@ -4,8 +4,8 @@
 *
 */
 
-#ifndef __BOOST_SIMULATION_PDEVS_RECEIVER_HPP__
-#define __BOOST_SIMULATION_PDEVS_RECEIVER_HPP__
+#ifndef __RECEIVER_HPP__
+#define __RECEIVER_HPP__
 
 
 #include <cadmium/modeling/ports.hpp>
@@ -94,11 +94,12 @@ class Receiver{
     }
 
     // time_advance function
-    TIME time_advance() const {
+    TIME time_advance() const{
         TIME next_internal;
-        if (state.sending) {
+        if (state.sending){
             next_internal = PREPARATION_TIME;
-        }else {
+        }
+		else{
             next_internal = std::numeric_limits<TIME>::infinity();
         }
         return next_internal;
@@ -112,4 +113,4 @@ class Receiver{
 };
   
 
-#endif // __BOOST_SIMULATION_PDEVS_RECEIVER_HPP__
+#endif // __RECEIVER_HPP__
