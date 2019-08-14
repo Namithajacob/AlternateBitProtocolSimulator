@@ -28,7 +28,7 @@
 #include "../../../lib/vendor/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
 
-#include "../../../include/senderCadmium.hpp"
+#include "../../../include/sender_cadmium.hpp"
 
 using namespace std;
 

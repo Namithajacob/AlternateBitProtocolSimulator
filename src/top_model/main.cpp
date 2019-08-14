@@ -17,9 +17,9 @@
 
 #include "../../lib/vendor/include/NDTime.hpp"
 #include "../../lib/vendor/include/iestream.hpp"
-#include "../../include/receivercadmium.hpp"
-#include "../../include/senderCadmium.hpp"
-#include "../../include/subnetcadmium.hpp"
+#include "../../include/receiver_cadmium.hpp"
+#include "../../include/sender_cadmium.hpp"
+#include "../../include/subnet_cadmium.hpp"
 
 
 using namespace std;

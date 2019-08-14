@@ -16,7 +16,7 @@
 #include "../../../include/message.hpp"
 #include "../../../lib/vendor/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
-#include "../../../include/receivercadmium.hpp"
+#include "../../../include/receiver_cadmium.hpp"
 
 using namespace std;
 using hclock=chrono::high_resolution_clock;
@@ -39,7 +39,7 @@ class ApplicationGen : public iestream_input<Message_t,T>{
     ApplicationGen() = default;
     ApplicationGen(const char* file_path) : iestream_input<Message_t,
         T>(file_path) {}
-    };
+};
 
 
 int main(){
