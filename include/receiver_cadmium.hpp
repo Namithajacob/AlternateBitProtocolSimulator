@@ -39,9 +39,9 @@ using namespace std;
  * This structure contains the input and output messages
  */
 struct receiver_defs{
-    struct output : public out_port<Message_t> {
+    struct output : public out_port<message_t> {
     };
-    struct input : public in_port<Message_t> {
+    struct input : public in_port<message_t> {
     };
 };
    
@@ -129,7 +129,7 @@ class Receiver{
      */
     typename make_message_bags<output_ports>::type output() const {
         typename make_message_bags<output_ports>::type bags;
-        Message_t out;
+        message_t out;
         out.value = state.ack_num % 10;
         get_messages<typename defs::output>(bags).push_back(out);
         return bags;

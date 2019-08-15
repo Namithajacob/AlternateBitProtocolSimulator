@@ -8,6 +8,9 @@
  * mentioned time
  */
 
+#define RECEIVER_INPUT  "test/data/receiver/receiver_input_test.txt"
+#define RECEIVER_OUTPUT  "test/data/receiver/receiver_test_output.txt"
+
 #include <iostream>
 #include <chrono>
 #include <algorithm>
@@ -36,13 +39,13 @@ using TIME = NDTime;
  *  Sets input ports for message
  */
 
-struct input : public cadmium::in_port<Message_t>{};
+struct input : public cadmium::in_port<message_t>{};
 
 /*
  *  Sets Output ports for message
  */
 
-struct output : public cadmium::out_port<Message_t>{};
+struct output : public cadmium::out_port<message_t>{};
 
 /*
  *  The below class application generator(ApplicationGen) takes the file path
@@ -50,10 +53,10 @@ struct output : public cadmium::out_port<Message_t>{};
  */
 
 template<typename T>
-class ApplicationGen : public iestream_input<Message_t,T>{
+class ApplicationGen : public iestream_input<message_t,T>{
     public:
     ApplicationGen() = default;
-    ApplicationGen(const char* file_path) : iestream_input<Message_t,
+    ApplicationGen(const char* file_path) : iestream_input<message_t,
         T>(file_path) {}
 };
 
@@ -71,8 +74,7 @@ int main(){
      * the execution time is stored.
      */
 
-    static std::ofstream out_data
-	    ("test/data/receiver/receiver_test_output.txt");
+    static std::ofstream out_data(RECEIVER_OUTPUT);
 
     /*
      * The below structure calls the output stream and returns the data
@@ -120,8 +122,8 @@ int main(){
      * Takes the input control file from the following path
      */
 
-    string input_data_control = "/test/data/receiver/receiver_input_test.txt";
-    const char * i_input_data_control = input_data_control.c_str();
+    string input_data_control = RECEIVER_INPUT;
+    const char * p_input_data_control = input_data_control.c_str();
 
     /*
      * The generator is initialized here which considers the time and input file
@@ -130,7 +132,7 @@ int main(){
 
     std::shared_ptr<cadmium::dynamic::modeling::model> generator =
         cadmium::dynamic::translate::make_dynamic_atomic_model<ApplicationGen,
-		TIME, const char* >("generator" , std::move(i_input_data_control));
+		TIME, const char* >("generator" , std::move(p_input_data_control));
 
     /*
      * Gets the output from receiver1
@@ -155,7 +157,7 @@ int main(){
     };
 
     cadmium::dynamic::modeling::ICs ics_TOP = {
-        cadmium::dynamic::translate::make_IC<iestream_input_defs<Message_t>::out,
+        cadmium::dynamic::translate::make_IC<iestream_input_defs<message_t>::out,
 		receiver_defs::input>("generator","receiver1")
     };
     std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP =
@@ -173,18 +175,18 @@ int main(){
      * Creates a model and measures the time taken to create the model created.
      */
 
-    auto elapsed1 = std::chrono::duration_cast<std::chrono::duration<double,
+    auto time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
     		        std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Model Created. Elapsed time: " << elapsed1 << "sec" << endl;
+    cout << "Model Created. Elapsed time: " << time_elapsed << "sec" << endl;
 
     /*
      *  This creates a runner and measures the time taken to create the same.
      */
 
     cadmium::dynamic::engine::runner<NDTime, logger_top> r(TOP, {0});
-    elapsed1 = std::chrono::duration_cast<std::chrono::duration<double,
+    time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
     		   std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Runner Created. Elapsed time: " << elapsed1 << "sec" << endl;
+    cout << "Runner Created. Elapsed time: " << time_elapsed << "sec" << endl;
 
     /*
      * Starts the simulation and runs until 04:00:00:000
@@ -192,8 +194,8 @@ int main(){
 
     cout << "Simulation starts" << endl;
     r.run_until(NDTime("04:00:00:000"));
-    auto elapsed = std::chrono::duration_cast<std::chrono::duration<double,
+    auto simulation_time = std::chrono::duration_cast<std::chrono::duration<double,
     		       std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Simulation took:" << elapsed << "sec" << endl;
+    cout << "Simulation took:" << simulation_time << "sec" << endl;
     return 0;
 }

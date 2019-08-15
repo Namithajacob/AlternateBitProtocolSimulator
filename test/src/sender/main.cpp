@@ -8,6 +8,11 @@
  * mentioned time
  */
 
+#define SENDER_INPUT_ACKNOWLEDGE "test/data/sender/sender_input_test_ack_In.txt"
+#define SENDER_OUTPUT "test/data/sender/sender_test_output.txt"
+#define SENDER_CONTROL "test/data/sender/sender_input_test_control_In.txt"
+
+
 #include <iostream>
 #include <chrono>
 #include <algorithm>
@@ -39,16 +44,16 @@ using TIME = NDTime;
  *  Sets input ports for message
  */
 
-struct input_control : public cadmium::in_port<Message_t>{};
-struct input_ack : public cadmium::in_port<Message_t>{};
+struct input_control : public cadmium::in_port<message_t>{};
+struct input_acknowledge : public cadmium::in_port<message_t>{};
 
 /*
  *  Sets Output ports for message
  */
 
-struct output_ack : public cadmium::out_port<Message_t>{};
-struct output_data : public cadmium::out_port<Message_t>{};
-struct output_pack : public cadmium::out_port<Message_t>{};
+struct output_ack : public cadmium::out_port<message_t>{};
+struct output_data : public cadmium::out_port<message_t>{};
+struct output_pack : public cadmium::out_port<message_t>{};
 
 /*
  *  The below class application generator(ApplicationGen) takes the file path
@@ -56,7 +61,7 @@ struct output_pack : public cadmium::out_port<Message_t>{};
  */
 
 template<typename T>
-class ApplicationGen : public iestream_input<Message_t,T> {
+class ApplicationGen : public iestream_input<message_t,T> {
     public:
     ApplicationGen() = default;
 
@@ -65,7 +70,7 @@ class ApplicationGen : public iestream_input<Message_t,T> {
      * the Application generator
      */
 
-    ApplicationGen(const char* file_path) : iestream_input<Message_t,
+    ApplicationGen(const char* file_path) : iestream_input<message_t,
         T>(file_path) {}
 };
 
@@ -83,8 +88,7 @@ int main(){
      * the execution time is stored.
      */
 
-    static std::ofstream output_data_file
-	    ("test/data/sender/sender_test_output.txt");
+    static std::ofstream output_data_file(SENDER_OUTPUT);
     /*
      * The below structure calls the output stream and returns the data
      * stored in the output data files.
@@ -131,8 +135,7 @@ int main(){
      * Takes the input control file from the following path
      */
 
-    string input_data_control =
-    	"test/data/sender/sender_input_test_control_In.txt";
+    string input_data_control = SENDER_CONTROL;
     const char * i_input_data_control = input_data_control.c_str();
 
     /*
@@ -148,8 +151,8 @@ int main(){
      * Takes the input acknowledgement file from the following path
      */
 
-    string input_data_ack = "test/data/sender/sender_input_test_ack_In.txt";
-    const char * i_input_data_ack = input_data_ack.c_str();
+    string input_data_ack = SENDER_INPUT_ACKNOWLEDGE;
+    const char * p_input_data_ack = input_data_ack.c_str();
 
     /*
      * The generator is initialized here which considers the time and input
@@ -158,7 +161,7 @@ int main(){
 
     std::shared_ptr<cadmium::dynamic::modeling::model> generator_ack =
         cadmium::dynamic::translate::make_dynamic_atomic_model<ApplicationGen,
-		TIME, const char* >("generator_ack" ,std::move(i_input_data_ack));
+		TIME, const char* >("generator_ack" ,std::move(p_input_data_ack));
 
     /*
      * Gets the output from sender1
@@ -182,18 +185,18 @@ int main(){
     };
     cadmium::dynamic::modeling::EICs eics_TOP = {};
     cadmium::dynamic::modeling::EOCs eocs_TOP = {
-        cadmium::dynamic::translate::make_EOC<Sender_defs::packetSentOut,
+        cadmium::dynamic::translate::make_EOC<sender_defs::packet_sent_out,
 		output_pack>("sender1"),
-		cadmium::dynamic::translate::make_EOC<Sender_defs::ackReceivedOut,
+		cadmium::dynamic::translate::make_EOC<sender_defs::ack_received_out,
 		output_ack>("sender1"),
-		cadmium::dynamic::translate::make_EOC<Sender_defs::dataOut,
+		cadmium::dynamic::translate::make_EOC<sender_defs::data_out,
 		output_data>("sender1")
     };
     cadmium::dynamic::modeling::ICs ics_TOP = {
-    	cadmium::dynamic::translate::make_IC<iestream_input_defs<Message_t>::out,
-		Sender_defs::controlIn>("generator_con","sender1"),
-		cadmium::dynamic::translate::make_IC<iestream_input_defs<Message_t>::out,
-		Sender_defs::ackIn>("generator_ack","sender1")
+    	cadmium::dynamic::translate::make_IC<iestream_input_defs<message_t>::out,
+		sender_defs::control_in>("generator_con","sender1"),
+		cadmium::dynamic::translate::make_IC<iestream_input_defs<message_t>::out,
+		sender_defs::ack_in>("generator_ack","sender1")
     };
     std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP =
     std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
@@ -210,18 +213,18 @@ int main(){
      * Creates a model and measures the time taken to create the model created.
      */
 
-    auto elapsed1 = std::chrono::duration_cast<std::chrono::duration<double,
+    auto time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
     	            std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Model Created. Elapsed time: " << elapsed1 << "sec" << endl;
+    cout << "Model Created. Elapsed time: " << time_elapsed << "sec" << endl;
 
     /*
      *  This creates a runner and measures the time taken to create the same.
      */
 
     cadmium::dynamic::engine::runner<NDTime, logger_top> r(TOP, {0});
-    elapsed1 = std::chrono::duration_cast<std::chrono::duration<double,
+    time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
     		   std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Runner Created. Elapsed time: " << elapsed1 << "sec" << endl;
+    cout << "Runner Created. Elapsed time: " << time_elapsed << "sec" << endl;
 
     /*
      * Starts the simulation and runs until 04:00:00:000
@@ -230,8 +233,8 @@ int main(){
     cout << "Simulation starts" << endl;
 
     r.run_until(NDTime("04:00:00:000"));
-    auto elapsed = std::chrono::duration_cast<std::chrono::duration<double,
+    auto simulation_time = std::chrono::duration_cast<std::chrono::duration<double,
     		       std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Simulation took:" << elapsed << "sec" << endl;
+    cout << "Simulation took:" << simulation_time << "sec" << endl;
     return 0;
 }

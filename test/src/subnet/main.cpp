@@ -8,6 +8,10 @@
  * mentioned time
  */
 
+#define SUBNET_OUTPUT "test/data/subnet/subnet_test_output.txt"
+#define SUBNET_INPUT "test/data/subnet/subnet_input_test.txt"
+
+
 #include <iostream>
 #include <chrono>
 #include <algorithm>
@@ -40,13 +44,13 @@ using TIME = NDTime;
  *  Sets input ports for message
  */
 
-struct input_in : public cadmium::in_port<Message_t>{};
+struct input_in : public cadmium::in_port<message_t>{};
 
 /*
  *  Sets Output ports for message
  */
 
-struct output_out: public cadmium::out_port<Message_t>{};
+struct output_out: public cadmium::out_port<message_t>{};
 
 /*
  *  The below class application generator(ApplicationGen) takes the file path
@@ -54,7 +58,7 @@ struct output_out: public cadmium::out_port<Message_t>{};
  */
 
 template<typename T>
-class ApplicationGen : public iestream_input<Message_t,T> {
+class ApplicationGen : public iestream_input<message_t,T> {
     public:
     ApplicationGen() = default;
 
@@ -63,7 +67,7 @@ class ApplicationGen : public iestream_input<Message_t,T> {
      * the Application generator
      */
 
-    ApplicationGen(const char* file_path) : iestream_input<Message_t,
+    ApplicationGen(const char* file_path) : iestream_input<message_t,
         T>(file_path) {}
 };
 
@@ -81,8 +85,7 @@ int main(){
      * the execution time is stored.
      */
 
-    static std::ofstream output_data_file
-	    ("test/data/subnet/subnet_test_output.txt");
+    static std::ofstream output_data_file(SUBNET_OUTPUT);
 
     /*
      * The below structure calls the output stream and returns the data
@@ -130,8 +133,8 @@ int main(){
      * Takes the input file from the following path
      */
 
-    string input_data = "test/data/subnet/subnet_input_test.txt";
-    const char * i_input_data = input_data.c_str();
+    string input_data = SUBNET_INPUT;
+    const char * p_input_data = input_data.c_str();
 
     /*
      * The generator is initialized here which considers the time and input file
@@ -140,7 +143,7 @@ int main(){
 
     std::shared_ptr<cadmium::dynamic::modeling::model> generator =
         cadmium::dynamic::translate::make_dynamic_atomic_model<ApplicationGen,
-		TIME, const char* >("generator" , std::move(i_input_data));
+		TIME, const char* >("generator" , std::move(p_input_data));
 
     /*
      * Gets the output from Subnet1
@@ -165,7 +168,7 @@ int main(){
 		output_out>("subnet1")
     };
     cadmium::dynamic::modeling::ICs ics_TOP = {
-        cadmium::dynamic::translate::make_IC<iestream_input_defs<Message_t>::out,
+        cadmium::dynamic::translate::make_IC<iestream_input_defs<message_t>::out,
 		subnet_defs::input>("generator","subnet1")
     };
     std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP =
@@ -183,18 +186,18 @@ int main(){
      * Creates a model and measures the time taken to create the model created.
      */
 
-    auto elapsed1 = std::chrono::duration_cast<std::chrono::duration<double,
+    auto time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
                     std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Model Created. Elapsed time: " << elapsed1 << "sec" << endl;
+    cout << "Model Created. Elapsed time: " << time_elapsed << "sec" << endl;
     
     /*
      *  This creates a runner and measures the time taken to create the same.
      */
 
     cadmium::dynamic::engine::runner<NDTime, logger_top> r(TOP, {0});
-    elapsed1 = std::chrono::duration_cast<std::chrono::duration<double,
+    time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
     		   std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Runner Created. Elapsed time: " << elapsed1 << "sec" << endl;
+    cout << "Runner Created. Elapsed time: " << time_elapsed << "sec" << endl;
 
     /*
      * Starts the simulation and runs until 04:00:00:000
@@ -203,8 +206,8 @@ int main(){
     cout << "Simulation starts" << endl;
 
     r.run_until(NDTime("04:00:00:000"));
-    auto elapsed = std::chrono::duration_cast<std::chrono::duration<double,
+    auto simulation_time = std::chrono::duration_cast<std::chrono::duration<double,
                    std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Simulation took:" << elapsed << "sec" << endl;
+    cout << "Simulation took:" << simulation_time << "sec" << endl;
     return 0;
 }
