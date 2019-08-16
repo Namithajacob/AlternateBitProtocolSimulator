@@ -1,3 +1,6 @@
+#define TOP_MODEL_OUTPUT "data/abp_output_0.txt"
+
+
 #include <iostream>
 #include <chrono>
 #include <algorithm>
@@ -17,68 +20,83 @@
 
 #include "../../lib/vendor/include/NDTime.hpp"
 #include "../../lib/vendor/include/iestream.hpp"
-
-#include "../../include/receiverCadmium.hpp"
-#include "../../include/senderCadmium.hpp"
-#include "../../include/subnetCadmium.hpp"
+#include "../../include/receiver_cadmium.hpp"
+#include "../../include/sender_cadmium.hpp"
+#include "../../include/subnet_cadmium.hpp"
 
 
 using namespace std;
-
 using hclock=chrono::high_resolution_clock;
 using TIME = NDTime;
 
 
 /***** SETING INPUT PORTS FOR COUPLEDs *****/
-struct inp_control : public cadmium::in_port<Message_t>{};
-struct inp_1 : public cadmium::in_port<Message_t>{};
-struct inp_2 : public cadmium::in_port<Message_t>{};
+struct input_control : public cadmium::in_port<message_t>{};
+struct input_1 : public cadmium::in_port<message_t>{};
+struct input_2 : public cadmium::in_port<message_t>{};
+
 /***** SETING OUTPUT PORTS FOR COUPLEDs *****/
-struct outp_ack : public cadmium::out_port<Message_t>{};
-struct outp_1 : public cadmium::out_port<Message_t>{};
-struct outp_2 : public cadmium::out_port<Message_t>{};
-struct outp_pack : public cadmium::out_port<Message_t>{};
+struct output_acknowledge : public cadmium::out_port<message_t>{};
+struct output_1 : public cadmium::out_port<message_t>{};
+struct output_2 : public cadmium::out_port<message_t>{};
+struct output_pack : public cadmium::out_port<message_t>{};
 
 
 /********************************************/
 /****** APPLICATION GENERATOR *******************/
 /********************************************/
 template<typename T>
-class ApplicationGen : public iestream_input<Message_t,T> {
-public:
-  ApplicationGen() = default;
-  ApplicationGen(const char* file_path) : iestream_input<Message_t,T>(file_path) {}
+class ApplicationGen : public iestream_input<message_t,T> {
+    public:
+    ApplicationGen() = default;
+    ApplicationGen(const char* file_path) : iestream_input<message_t,
+        T>(file_path) {}
 };
 
 
-int main(int argc, char ** argv) {
+int main(int argc, char ** argv){
 
-  if (argc < 2) {
-   cout << "you are using this program with wrong parameters. Te program should be invoked as follow:";
-   cout << argv[0] << " path to the input file " << endl;
-   return 1; 
-  }
+    if (argc < 2) {
+        cout << "you are using this program with wrong parameters.";
+        cout << "The program should be invoked as follow:";
+        cout << argv[0] << " path to the input file " << endl;
+        return 1;
+    }
 
-  auto start = hclock::now(); //to measure simulation execution time
+    auto start = hclock::now(); //to measure simulation execution time
 
 /*************** Loggers *******************/
-  static std::ofstream out_data("data/abp_output.txt");
+    static std::ofstream out_data(TOP_MODEL_OUTPUT);
     struct oss_sink_provider{
         static std::ostream& sink(){          
-            return out_data;
+        return out_data;
         }
     };
 
-using info=cadmium::logger::logger<cadmium::logger::logger_info, cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
-using debug=cadmium::logger::logger<cadmium::logger::logger_debug, cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
-using state=cadmium::logger::logger<cadmium::logger::logger_state, cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
-using log_messages=cadmium::logger::logger<cadmium::logger::logger_messages, cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
-using routing=cadmium::logger::logger<cadmium::logger::logger_message_routing, cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
-using global_time=cadmium::logger::logger<cadmium::logger::logger_global_time, cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
-using local_time=cadmium::logger::logger<cadmium::logger::logger_local_time, cadmium::dynamic::logger::formatter<TIME>, oss_sink_provider>;
-using log_all=cadmium::logger::multilogger<info, debug, state, log_messages, routing, global_time, local_time>;
-
-using logger_top=cadmium::logger::multilogger<log_messages, global_time>;
+    using info=cadmium::logger::logger<cadmium::logger::logger_info,
+    		   cadmium::dynamic::logger::formatter<TIME>,
+			   oss_sink_provider>;
+    using debug=cadmium::logger::logger<cadmium::logger::logger_debug,
+    		    cadmium::dynamic::logger::formatter<TIME>,
+				oss_sink_provider>;
+    using state=cadmium::logger::logger<cadmium::logger::logger_state,
+    		    cadmium::dynamic::logger::formatter<TIME>,
+				oss_sink_provider>;
+    using log_messages=cadmium::logger::logger<cadmium::logger::logger_messages,
+    		           cadmium::dynamic::logger::formatter<TIME>,
+					   oss_sink_provider>;
+    using routing=cadmium::logger::logger<cadmium::logger::logger_message_routing,
+    		      cadmium::dynamic::logger::formatter<TIME>,
+				  oss_sink_provider>;
+    using global_time=cadmium::logger::logger<cadmium::logger::logger_global_time,
+    		          cadmium::dynamic::logger::formatter<TIME>,
+					  oss_sink_provider>;
+    using local_time=cadmium::logger::logger<cadmium::logger::logger_local_time,
+    		         cadmium::dynamic::logger::formatter<TIME>,
+					 oss_sink_provider>;
+    using log_all=cadmium::logger::multilogger<info, debug, state,
+    		      log_messages,routing, global_time, local_time>;
+    using logger_top=cadmium::logger::multilogger<log_messages, global_time>;
 
 
 /*******************************************/
@@ -88,23 +106,29 @@ using logger_top=cadmium::logger::multilogger<log_messages, global_time>;
 /********************************************/
 /****** APPLICATION GENERATOR *******************/
 /********************************************/
-string input_data_control = argv[1];
-const char * i_input_data_control = input_data_control.c_str();
+    string input_data_control = argv[1];
+    const char * p_input_data_control = input_data_control.c_str();
 
-std::shared_ptr<cadmium::dynamic::modeling::model> generator_con = cadmium::dynamic::translate::make_dynamic_atomic_model<ApplicationGen, TIME, const char* >("generator_con" , std::move(i_input_data_control));
+    std::shared_ptr<cadmium::dynamic::modeling::model> generator_con =
+    cadmium::dynamic::translate::make_dynamic_atomic_model<ApplicationGen,
+	TIME,const char* >("generator_con" , std::move(p_input_data_control));
 
 
 /********************************************/
 /****** SENDER *******************/
 /********************************************/
 
-std::shared_ptr<cadmium::dynamic::modeling::model> sender1 = cadmium::dynamic::translate::make_dynamic_atomic_model<Sender, TIME>("sender1");
+    std::shared_ptr<cadmium::dynamic::modeling::model> sender1 =
+    cadmium::dynamic::translate::make_dynamic_atomic_model<Sender,
+	TIME>("sender1");
 
 /********************************************/
 /****** RECIEVER *******************/
 /********************************************/
 
-std::shared_ptr<cadmium::dynamic::modeling::model> receiver1 = cadmium::dynamic::translate::make_dynamic_atomic_model<Receiver, TIME>("receiver1");
+    std::shared_ptr<cadmium::dynamic::modeling::model> receiver1 =
+    cadmium::dynamic::translate::make_dynamic_atomic_model<Receiver,
+	TIME>("receiver1");
 
 
 
@@ -112,101 +136,138 @@ std::shared_ptr<cadmium::dynamic::modeling::model> receiver1 = cadmium::dynamic:
 /****** SUBNET *******************/
 /********************************************/
 
-std::shared_ptr<cadmium::dynamic::modeling::model> subnet1 = cadmium::dynamic::translate::make_dynamic_atomic_model<Subnet, TIME>("subnet1");
-std::shared_ptr<cadmium::dynamic::modeling::model> subnet2 = cadmium::dynamic::translate::make_dynamic_atomic_model<Subnet, TIME>("subnet2");
+    std::shared_ptr<cadmium::dynamic::modeling::model> subnet1 =
+    cadmium::dynamic::translate::make_dynamic_atomic_model<Subnet,
+	TIME>("subnet1");
+    std::shared_ptr<cadmium::dynamic::modeling::model> subnet2 =
+    cadmium::dynamic::translate::make_dynamic_atomic_model<Subnet,
+	TIME>("subnet2");
 
 /************************/
 /*******NETWORK********/
 /************************/
-cadmium::dynamic::modeling::Ports iports_Network = {typeid(inp_1),typeid(inp_2)};
-cadmium::dynamic::modeling::Ports oports_Network = {typeid(outp_1),typeid(outp_2)};
-cadmium::dynamic::modeling::Models submodels_Network = {subnet1, subnet2};
-cadmium::dynamic::modeling::EICs eics_Network = {
-  cadmium::dynamic::translate::make_EIC<inp_1, Subnet_defs::in>("subnet1"),
-  cadmium::dynamic::translate::make_EIC<inp_2, Subnet_defs::in>("subnet2")
-};
-cadmium::dynamic::modeling::EOCs eocs_Network = {
-  cadmium::dynamic::translate::make_EOC<Subnet_defs::out,outp_1>("subnet1"),
-cadmium::dynamic::translate::make_EOC<Subnet_defs::out,outp_2>("subnet2")
-};
-cadmium::dynamic::modeling::ICs ics_Network = {};
-std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> NETWORK = std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
- "Network", 
- submodels_Network, 
- iports_Network, 
- oports_Network, 
- eics_Network, 
- eocs_Network, 
- ics_Network 
-  );
+    cadmium::dynamic::modeling::Ports iports_Network = {
+    	typeid(input_1),typeid(input_2)
+    };
+    cadmium::dynamic::modeling::Ports oports_Network = {
+    	typeid(output_1),typeid(output_2)
+    };
+    cadmium::dynamic::modeling::Models submodels_Network = {
+        subnet1, subnet2
+    };
+    cadmium::dynamic::modeling::EICs eics_Network = {
+        cadmium::dynamic::translate::make_EIC<input_1,
+		subnet_defs::input>("subnet1"),
+        cadmium::dynamic::translate::make_EIC<input_2,
+		subnet_defs::input>("subnet2")
+    };
+    cadmium::dynamic::modeling::EOCs eocs_Network = {
+        cadmium::dynamic::translate::make_EOC<subnet_defs::output,
+		output_1>("subnet1"),
+        cadmium::dynamic::translate::make_EOC<subnet_defs::output,
+		output_2>("subnet2")
+    };
+    cadmium::dynamic::modeling::ICs ics_Network = {};
+    std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> NETWORK =
+    std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
+        "Network",
+        submodels_Network,
+        iports_Network,
+        oports_Network,
+        eics_Network,
+        eocs_Network,
+        ics_Network
+    );
 
 /************************/
 /*******ABPSimulator********/
 /************************/
-cadmium::dynamic::modeling::Ports iports_ABPSimulator = {typeid(inp_control)};
-cadmium::dynamic::modeling::Ports oports_ABPSimulator = {typeid(outp_ack),typeid(outp_pack)};
-cadmium::dynamic::modeling::Models submodels_ABPSimulator = {sender1, receiver1,NETWORK};
-cadmium::dynamic::modeling::EICs eics_ABPSimulator = {
-  cadmium::dynamic::translate::make_EIC<inp_control, Sender_defs::controlIn>("sender1")
-};
-cadmium::dynamic::modeling::EOCs eocs_ABPSimulator = {
-  cadmium::dynamic::translate::make_EOC<Sender_defs::packetSentOut,outp_pack>("sender1"),
-cadmium::dynamic::translate::make_EOC<Sender_defs::ackReceivedOut,outp_ack>("sender1")
-};
-cadmium::dynamic::modeling::ICs ics_ABPSimulator = {
-  cadmium::dynamic::translate::make_IC<Sender_defs::dataOut, inp_1>("sender1","Network"),
-  cadmium::dynamic::translate::make_IC<outp_2, Sender_defs::ackIn>("Network","sender1"),
-  cadmium::dynamic::translate::make_IC<Receiver_defs::out, inp_2>("receiver1","Network"),
-  cadmium::dynamic::translate::make_IC<outp_1, Receiver_defs::in>("Network","receiver1")
-};
-std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> ABPSimulator = std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
- "ABPSimulator", 
- submodels_ABPSimulator, 
- iports_ABPSimulator, 
- oports_ABPSimulator, 
- eics_ABPSimulator, 
- eocs_ABPSimulator, 
- ics_ABPSimulator 
-  );
+    cadmium::dynamic::modeling::Ports iports_ABPSimulator = {
+        typeid(input_control)
+    };
+    cadmium::dynamic::modeling::Ports oports_ABPSimulator ={
+    	typeid(output_acknowledge),typeid(output_pack)
+    };
+    cadmium::dynamic::modeling::Models submodels_ABPSimulator = {
+    	sender1,receiver1,NETWORK
+    };
+    cadmium::dynamic::modeling::EICs eics_ABPSimulator = {
+        cadmium::dynamic::translate::make_EIC<input_control,
+		sender_defs::control_in>("sender1")
+    };
+    cadmium::dynamic::modeling::EOCs eocs_ABPSimulator = {
+        cadmium::dynamic::translate::make_EOC<sender_defs::packet_sent_out,
+		output_pack>("sender1"),
+        cadmium::dynamic::translate::make_EOC<sender_defs::ack_received_out,
+		output_acknowledge>("sender1")
+    };
+    cadmium::dynamic::modeling::ICs ics_ABPSimulator = {
+        cadmium::dynamic::translate::make_IC<sender_defs::data_out,
+		input_1>("sender1","Network"),
+        cadmium::dynamic::translate::make_IC<output_2,
+		sender_defs::ack_in>("Network","sender1"),
+        cadmium::dynamic::translate::make_IC<receiver_defs::output,
+		input_2>("receiver1","Network"),
+        cadmium::dynamic::translate::make_IC<output_1,
+		receiver_defs::input>("Network","receiver1")
+    };
+    std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> ABPSimulator =
+    std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
+        "ABPSimulator",
+        submodels_ABPSimulator,
+        iports_ABPSimulator,
+        oports_ABPSimulator,
+        eics_ABPSimulator,
+        eocs_ABPSimulator,
+        ics_ABPSimulator
+    );
 
 
 /************************/
 /*******TOP MODEL********/
 /************************/
-cadmium::dynamic::modeling::Ports iports_TOP = {};
-cadmium::dynamic::modeling::Ports oports_TOP = {typeid(outp_pack),typeid(outp_ack)};
-cadmium::dynamic::modeling::Models submodels_TOP = {generator_con, ABPSimulator};
-cadmium::dynamic::modeling::EICs eics_TOP = {};
-cadmium::dynamic::modeling::EOCs eocs_TOP = {
-  cadmium::dynamic::translate::make_EOC<outp_pack,outp_pack>("ABPSimulator"),
-cadmium::dynamic::translate::make_EOC<outp_pack,outp_ack>("ABPSimulator")
-};
-cadmium::dynamic::modeling::ICs ics_TOP = {
-  cadmium::dynamic::translate::make_IC<iestream_input_defs<Message_t>::out,inp_control>("generator_con","ABPSimulator")
-};
-std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP = std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
- "TOP", 
- submodels_TOP, 
- iports_TOP, 
- oports_TOP, 
- eics_TOP, 
- eocs_TOP, 
- ics_TOP 
-  );
+    cadmium::dynamic::modeling::Ports iports_TOP = {};
+    cadmium::dynamic::modeling::Ports oports_TOP = {
+        typeid(output_pack),typeid(output_acknowledge)
+    };
+    cadmium::dynamic::modeling::Models submodels_TOP = {
+    	generator_con, ABPSimulator
+    };
+    cadmium::dynamic::modeling::EICs eics_TOP = {};
+    cadmium::dynamic::modeling::EOCs eocs_TOP = {
+        cadmium::dynamic::translate::make_EOC<output_pack,
+		output_pack>("ABPSimulator"),
+        cadmium::dynamic::translate::make_EOC<output_pack,
+		output_acknowledge>("ABPSimulator")
+    };
+    cadmium::dynamic::modeling::ICs ics_TOP = {
+    	cadmium::dynamic::translate::make_IC<iestream_input_defs<message_t>::out,
+		input_control>("generator_con","ABPSimulator")
+    };
+    std::shared_ptr<cadmium::dynamic::modeling::coupled<TIME>> TOP =
+    std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
+    	"TOP",
+		submodels_TOP,
+		iports_TOP,
+		oports_TOP,
+		eics_TOP,
+		eocs_TOP,
+		ics_TOP
+    );
 
 ///****************////
 
-    auto elapsed1 = std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Model Created. Elapsed time: " << elapsed1 << "sec" << endl;
-    
+    auto time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
+    				std::ratio<1>>>(hclock::now() - start).count();
+    cout << "Model Created. simulation_time time: " << time_elapsed << "sec" << endl;
     cadmium::dynamic::engine::runner<NDTime, logger_top> r(TOP, {0});
-    elapsed1 = std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Runner Created. Elapsed time: " << elapsed1 << "sec" << endl;
-
+    time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
+    		   std::ratio<1>>>(hclock::now() - start).count();
+    cout << "Runner Created. simulation_time time: " << time_elapsed << "sec" << endl;
     cout << "Simulation starts" << endl;
-
     r.run_until(NDTime("04:00:00:000"));
-    auto elapsed = std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Simulation took:" << elapsed << "sec" << endl;
+    auto simulation_time = std::chrono::duration_cast<std::chrono::duration<double,
+    			   std::ratio<1>>>(hclock::now() - start).count();
+    cout << "Simulation took:" << simulation_time << "sec" << endl;
     return 0;
 }

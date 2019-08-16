@@ -27,22 +27,22 @@ using namespace cadmium;
 using namespace std;
 
 //Port definition
-    struct Sender_defs{
-        struct packetSentOut : public out_port<Message_t> {
+    struct sender_defs{
+        struct packet_sent_out : public out_port<message_t> {
         };
-        struct ackReceivedOut : public out_port<Message_t> {
+        struct ack_received_out : public out_port<message_t> {
         };
-        struct dataOut : public out_port<Message_t> {
+        struct data_out : public out_port<message_t> {
         };
-        struct controlIn : public in_port<Message_t> {
+        struct control_in : public in_port<message_t> {
         };
-        struct ackIn : public in_port<Message_t> {
+        struct ack_in : public in_port<message_t> {
         };
     };
 
     template<typename TIME>
     class Sender{
-        using defs=Sender_defs; // putting definitions in context
+        using defs=sender_defs; // putting definitions in context
         public:
             //Parameters to be overwriten when instantiating the atomic model
             TIME   preparationTime;
@@ -68,8 +68,8 @@ using namespace std;
             }; 
             state_type state;
             // ports definition
-            using input_ports=std::tuple<typename defs::controlIn, typename defs::ackIn>;
-            using output_ports=std::tuple<typename defs::packetSentOut, typename defs::ackReceivedOut, typename defs::dataOut>;
+            using input_ports=std::tuple<typename defs::control_in, typename defs::ack_in>;
+            using output_ports=std::tuple<typename defs::packet_sent_out, typename defs::ack_received_out, typename defs::data_out>;
 
             // internal transition
             void internal_transition() {
@@ -100,8 +100,8 @@ using namespace std;
 
             // external transition
             void external_transition(TIME e, typename make_message_bags<input_ports>::type mbs) { 
-              if((get_messages<typename defs::controlIn>(mbs).size()+get_messages<typename defs::ackIn>(mbs).size())>1) assert(false && "one message per time uniti");
-              for(const auto &x : get_messages<typename defs::controlIn>(mbs)){
+              if((get_messages<typename defs::control_in>(mbs).size()+get_messages<typename defs::ack_in>(mbs).size())>1) assert(false && "one message per time uniti");
+              for(const auto &x : get_messages<typename defs::control_in>(mbs)){
                 if(state.model_active == false){
                   state.totalPacketNum = static_cast < int > (x.value);
                   if (state.totalPacketNum > 0){
@@ -118,7 +118,7 @@ using namespace std;
                   }
                 }
               }
-              for(const auto &x : get_messages<typename defs::ackIn>(mbs)){
+              for(const auto &x : get_messages<typename defs::ack_in>(mbs)){
                 if(state.model_active == true) { 
                   if (state.alt_bit == static_cast < int > (x.value)) {
                     state.ack = true;
@@ -143,16 +143,16 @@ using namespace std;
             // output function
             typename make_message_bags<output_ports>::type output() const {
               typename make_message_bags<output_ports>::type bags;
-              Message_t out;
+              message_t out;
               if (state.sending){
                 out.value = state.packetNum * 10 + state.alt_bit;
-                get_messages<typename defs::dataOut>(bags).push_back(out);
+                get_messages<typename defs::data_out>(bags).push_back(out);
                 out.value = state.packetNum;
-                get_messages<typename defs::packetSentOut>(bags).push_back(out);
+                get_messages<typename defs::packet_sent_out>(bags).push_back(out);
               }else{
                 if (state.ack){
                   out.value = state.alt_bit;
-                  get_messages<typename defs::ackReceivedOut>(bags).push_back(out);
+                  get_messages<typename defs::ack_received_out>(bags).push_back(out);
                 }
               }   
               return bags;
