@@ -1,5 +1,5 @@
-/*
- * Brief Description : This is the header file for receiver model.
+/**
+ *\brief This is the header file for receiver model.
  *
  * Detailed Description : The receiver receives the data and send
  * back acknowledgment after a fixed time delay. The receiver basically
@@ -35,7 +35,7 @@
 using namespace cadmium;
 using namespace std;
 
-/*
+/**
  * This structure contains the input and output messages
  */
 struct receiver_defs{
@@ -45,23 +45,20 @@ struct receiver_defs{
     };
 };
    
-/*
+/**
  *  The class Receiver receives a message and the acknowledgment
  *  for receiving this message will be passed
  */
 
 template<typename TIME>
 class Receiver{
-	/*
-	 * putting definitions in context
-	 */
+
+	/**< putting definitions in context*/
     using defs=receiver_defs;
     public:
-    /*
-     * This constant has the value of time delay from input to output
-     */
+    /**<This constant has the value of time delay between input and output*/
     TIME   PREPARATION_TIME;
-    /*
+    /**
      * Constructor for receiver
      * It initialize time delay constant with a value
      */
@@ -71,7 +68,7 @@ class Receiver{
         state.sending     = false;
     }
             
-    /*
+    /**
      * In the structure below it has the acknowledgment number and state
      * of the receiver
      */
@@ -80,13 +77,12 @@ class Receiver{
         bool sending;
     };
     state_type state;
-    /*
-     * Defining Input and output ports
-     */
+
+     /**<Defining Input and output ports*/
     using input_ports=std::tuple<typename defs::input>;
     using output_ports=std::tuple<typename defs::output>;
 
-    /*
+    /**
      * This function sets the receiver sending state off i.e sets it
      * as passive
      */
@@ -94,11 +90,13 @@ class Receiver{
         state.sending = false;
     }
 
-    /*
+    /**
      * This function receives the message and checks the number of
      * message. If the number of message is greater than 1, it says
      * only one message per time unit. Else, it will set the receiver
      * sending state as on, i.e active
+     * @param variable of type TIME
+     * @param varable of type make_message_bags
      */
     void external_transition(TIME e,
         typename make_message_bags<input_ports>::type mbs) {
@@ -112,9 +110,11 @@ class Receiver{
                            
     }
 
-    /*
+    /**
      * This function calls both internal_transition and external_transition
      * functions.
+     * @param variable of type TIME
+     * @param varable of type make_message_bags
      */
     void confluence_transition(TIME e,
     	typename make_message_bags<input_ports>::type mbs) {
@@ -122,10 +122,11 @@ class Receiver{
         external_transition(TIME(), std::move(mbs));
     }
 
-    /*
+    /**
      * This function sends acknowledgment to the output port
      * The acknowledgment value is calculated by the modulo of
      * acknowledgment number with 10.
+     * @return variable of type make_message_bags
      */
     typename make_message_bags<output_ports>::type output() const {
         typename make_message_bags<output_ports>::type bags;
@@ -135,11 +136,12 @@ class Receiver{
         return bags;
     }
 
-    /*
+    /**
      * This function sets the next internal transition time.
      * If the receiver is in sending state, it will set the
      * next internal transition time as Preparation time, else
      * it will set to infinity
+     * @return next_internal, next internal transition time.
      */
     TIME time_advance() const {
         TIME next_internal;
@@ -150,8 +152,9 @@ class Receiver{
         }
         return next_internal;
     }
-    /*
-     * returns acknowledgment number to a string stream
+    /**
+     * Function returns acknowledgment number to a string stream
+     * @return string stream which is acknowledgment number
      */
     friend std::ostringstream& operator<<(std::ostringstream& os,
     const typename Receiver<TIME>::state_type& i) {

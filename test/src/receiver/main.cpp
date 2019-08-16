@@ -1,14 +1,25 @@
-/*
- * Brief Description : The main file implements the operation of receiver model.
+/**
+ * \brief  This main file of receiver implements the
+ * operation of receiver model which can be used for testing.
  *
- * Detailed Description : The Application generator takes file path as input
- * and stores the output data. It also generates the logs using Cadmium and
+ * receiver receive the data and send back an acknowledgement extracted
+ * from the received data after a time period.
+ * The Application generator takes file path as input and stores the
+ * output data. It also generates the logs using Cadmium and
  * Desttimes which are third party libraries.
  * The time limit set for this to run is 04:00:00:000, i.e it runs until the
  * mentioned time
  */
 
+/**
+ * Defining the file path for input
+ */
+
 #define RECEIVER_INPUT  "test/data/receiver/receiver_input_test.txt"
+
+/**
+ * Defining the sender output file path
+ */
 #define RECEIVER_OUTPUT  "test/data/receiver/receiver_test_output.txt"
 
 #include <iostream>
@@ -35,27 +46,40 @@ using namespace std;
 using hclock=chrono::high_resolution_clock;
 using TIME = NDTime;
 
-/*
+/**
  *  Sets input ports for message
  */
 
 struct input : public cadmium::in_port<message_t>{};
 
-/*
+/**
  *  Sets Output ports for message
  */
 
 struct output : public cadmium::out_port<message_t>{};
 
-/*
+/**
+ * \brief class ApplicationGen for Application Generator.
+ *
  *  The below class application generator(ApplicationGen) takes the file path
- *  and waits for input
+ *  and transmits as message.
  */
 
 template<typename T>
 class ApplicationGen : public iestream_input<message_t,T>{
     public:
+
+	/**
+     * Default constructor for the class
+	 */
+
     ApplicationGen() = default;
+
+    /**
+     * The below constructor of ApplicationGen class takes the input file path for
+     * the Application generator
+     */
+
     ApplicationGen(const char* file_path) : iestream_input<message_t,
         T>(file_path) {}
 };
@@ -63,20 +87,20 @@ class ApplicationGen : public iestream_input<message_t,T>{
 
 int main(){
 
-	/*
+	/**
 	 *  measures simulation execution time
 	 */
 
-    auto start = hclock::now(); //to measure simulation execution time
+    auto start = hclock::now();
 
-    /*
+    /**
      * In the below path mentioned, the messages and logs which are passed in
      * the execution time is stored.
      */
 
     static std::ofstream out_data(RECEIVER_OUTPUT);
 
-    /*
+    /**
      * The below structure calls the output stream and returns the data
      * stored in the output data files.
      */
@@ -87,7 +111,7 @@ int main(){
         }
     };
 
-    /*
+    /**
      * Cadmium library functions are used to call the source logger
      * to generate the log files and store them.
      */
@@ -118,14 +142,18 @@ int main(){
 
     using logger_top=cadmium::logger::multilogger<log_messages, global_time>;
 
-    /*
+    /**
      * Takes the input control file from the following path
      */
 
     string input_data_control = RECEIVER_INPUT;
+
+    /**
+     * pointer that points to a file
+     */
     const char * p_input_data_control = input_data_control.c_str();
 
-    /*
+    /**
      * The generator is initialized here which considers the time and input file
      * and generates the output file
      */
@@ -134,7 +162,7 @@ int main(){
         cadmium::dynamic::translate::make_dynamic_atomic_model<ApplicationGen,
 		TIME, const char* >("generator" , std::move(p_input_data_control));
 
-    /*
+    /**
      * Gets the output from receiver1
      */
 
@@ -142,7 +170,7 @@ int main(){
     	cadmium::dynamic::translate::make_dynamic_atomic_model<Receiver,
 		TIME>("receiver1");
 
-    /*
+    /**
      * Stores data obtained in top model operations over a time frame
      * which will be stored in output file
      */
@@ -171,7 +199,7 @@ int main(){
         ics_TOP
     );
 
-    /*
+    /**
      * Creates a model and measures the time taken to create the model created.
      */
 
@@ -179,7 +207,7 @@ int main(){
     		        std::ratio<1>>>(hclock::now() - start).count();
     cout << "Model Created. Elapsed time: " << time_elapsed << "sec" << endl;
 
-    /*
+    /**
      *  This creates a runner and measures the time taken to create the same.
      */
 
@@ -188,7 +216,7 @@ int main(){
     		   std::ratio<1>>>(hclock::now() - start).count();
     cout << "Runner Created. Elapsed time: " << time_elapsed << "sec" << endl;
 
-    /*
+    /**
      * Starts the simulation and runs until 04:00:00:000
      */
 
