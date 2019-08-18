@@ -2,7 +2,7 @@
  * \brief  This main file of receiver implements the
  * operation of receiver model which can be used for testing.
  *
- * receiver receive the data and send back an acknowledgement extracted
+ * receiver receive the data and send back an acknowledgment extracted
  * from the received data after a time period.
  * The Application generator takes file path as input and stores the
  * output data. It also generates the logs using Cadmium and
@@ -76,8 +76,8 @@ class ApplicationGen : public iestream_input<message_t,T>{
     ApplicationGen() = default;
 
     /**
-     * The below constructor of ApplicationGen class takes the input file path for
-     * the Application generator
+     * The parameterized constructor of ApplicationGen class takes the input
+     * file path for the Application generator
      */
 
     ApplicationGen(const char* file_path) : iestream_input<message_t,
@@ -88,7 +88,7 @@ class ApplicationGen : public iestream_input<message_t,T>{
 int main(){
 
 	/**
-	 *  measures simulation execution time
+	 *  This variable will have the start time of simulation
 	 */
 
     auto start = hclock::now();
@@ -200,7 +200,7 @@ int main(){
     );
 
     /**
-     * Creates a model and measures the time taken to create the model created.
+     * Creates a model and measures the time taken for creating this model.
      */
 
     auto time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
@@ -208,7 +208,7 @@ int main(){
     cout << "Model Created. Elapsed time: " << time_elapsed << "sec" << endl;
 
     /**
-     *  This creates a runner and measures the time taken to create the same.
+     *  This creates a runner and measures the time taken for creating this runner.
      */
 
     cadmium::dynamic::engine::runner<NDTime, logger_top> r(TOP, {0});

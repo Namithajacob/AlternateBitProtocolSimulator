@@ -81,8 +81,8 @@ class ApplicationGen : public iestream_input<message_t,T> {
     ApplicationGen() = default;
 
     /**
-     * The below constructor of ApplicationGen class takes the input file path for
-     * the Application generator
+     * The below parameterized constructor of ApplicationGen class
+     * takes the input file path for the Application generator
      */
 
     ApplicationGen(const char* file_path) : iestream_input<message_t,
@@ -206,15 +206,15 @@ int main(){
     );
 
     /**
-     * Creates a model and measures the time taken to create the model created.
+     * Creates a model and measures the time taken for creating this model.
      */
 
     auto time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
                     std::ratio<1>>>(hclock::now() - start).count();
     cout << "Model Created. Elapsed time: " << time_elapsed << "sec" << endl;
     
-    /*
-     *  This creates a runner and measures the time taken to create the same.
+    /**
+     * This creates a runner and measures the time taken for creating this runner.
      */
 
     cadmium::dynamic::engine::runner<NDTime, logger_top> r(TOP, {0});

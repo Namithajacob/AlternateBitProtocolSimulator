@@ -60,7 +60,8 @@ class Receiver{
     TIME   PREPARATION_TIME;
     /**
      * Constructor for receiver
-     * It initialize time delay constant with a value
+     * It initialize time delay constant with a value, acknowledgment number
+     * and sending state
      */
     Receiver() noexcept{
     	PREPARATION_TIME  = TIME("00:00:10");
@@ -95,8 +96,8 @@ class Receiver{
      * message. If the number of message is greater than 1, it says
      * only one message per time unit. Else, it will set the receiver
      * sending state as on, i.e active
-     * @param variable of type TIME
-     * @param varable of type make_message_bags
+     * @param variable e of type TIME
+     * @param variable mbs of type make_message_bags
      */
     void external_transition(TIME e,
         typename make_message_bags<input_ports>::type mbs) {
@@ -113,8 +114,8 @@ class Receiver{
     /**
      * This function calls both internal_transition and external_transition
      * functions.
-     * @param variable of type TIME
-     * @param varable of type make_message_bags
+     * @param variable e of type TIME
+     * @param variable mbs of type make_message_bags
      */
     void confluence_transition(TIME e,
     	typename make_message_bags<input_ports>::type mbs) {
@@ -126,7 +127,7 @@ class Receiver{
      * This function sends acknowledgment to the output port
      * The acknowledgment value is calculated by the modulo of
      * acknowledgment number with 10.
-     * @return variable of type make_message_bags
+     * @return variable bags of type make_message_bags
      */
     typename make_message_bags<output_ports>::type output() const {
         typename make_message_bags<output_ports>::type bags;
