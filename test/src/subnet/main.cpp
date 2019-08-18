@@ -1,3 +1,4 @@
+
 /**
  * \brief This main file of subnet implements the operation of subnet model
  *  which can be used for testing.
@@ -21,7 +22,6 @@
  */
 
 #define SUBNET_INPUT "test/data/subnet/subnet_input_test.txt"
-
 
 #include <iostream>
 #include <chrono>
@@ -49,7 +49,6 @@ using namespace std;
 
 using hclock=chrono::high_resolution_clock;
 using TIME = NDTime;
-
 
 /**
  *  Sets input ports for message

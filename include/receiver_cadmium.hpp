@@ -38,6 +38,7 @@ using namespace std;
 /**
  * This structure contains the input and output messages
  */
+ 
 struct receiver_defs{
     struct output : public out_port<message_t> {
     };
@@ -63,6 +64,7 @@ class Receiver{
      * It initialize time delay constant with a value, acknowledgment number
      * and sending state
      */
+     
     Receiver() noexcept{
     	PREPARATION_TIME  = TIME("00:00:10");
         state.ack_num    = 0;
@@ -73,6 +75,7 @@ class Receiver{
      * In the structure below it has the acknowledgment number and state
      * of the receiver
      */
+     
     struct state_type{
         int ack_num;
         bool sending;
@@ -87,6 +90,7 @@ class Receiver{
      * This function sets the receiver sending state off i.e sets it
      * as passive
      */
+     
     void internal_transition() {
         state.sending = false;
     }
@@ -99,6 +103,7 @@ class Receiver{
      * @param variable e of type TIME
      * @param variable mbs of type make_message_bags
      */
+
     void external_transition(TIME e,
         typename make_message_bags<input_ports>::type mbs) {
             if(get_messages<typename defs::input>(mbs).size()>1){
@@ -117,6 +122,7 @@ class Receiver{
      * @param variable e of type TIME
      * @param variable mbs of type make_message_bags
      */
+     
     void confluence_transition(TIME e,
     	typename make_message_bags<input_ports>::type mbs) {
         internal_transition();
@@ -129,6 +135,7 @@ class Receiver{
      * acknowledgment number with 10.
      * @return variable bags of type make_message_bags
      */
+
     typename make_message_bags<output_ports>::type output() const {
         typename make_message_bags<output_ports>::type bags;
         message_t out;
@@ -153,10 +160,12 @@ class Receiver{
         }
         return next_internal;
     }
+    
     /**
      * Function returns acknowledgment number to a string stream
      * @return string stream which is acknowledgment number
      */
+     
     friend std::ostringstream& operator<<(std::ostringstream& os,
     const typename Receiver<TIME>::state_type& i) {
         os << "ackNum: " << i.ack_num;

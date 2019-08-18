@@ -1,3 +1,4 @@
+
 /**
  * \brief  This main file of sender implements the
  * operation of sender model which can be used for testing.
@@ -475,7 +476,7 @@ int main(){
 
     std::shared_ptr<cadmium::dynamic::modeling::model> generator_con =
         cadmium::dynamic::translate::make_dynamic_atomic_model<ApplicationGen,
-	    TIME, const char* >("generator_con" ,std::move(i_input_data_control));
+	    TIME, const char* >("generator_con" ,std::move(p_input_data_control));
 
     /**
      * Takes the input acknowledgment file from the following path
@@ -793,7 +794,7 @@ int main(){
 
     cadmium::dynamic::modeling::Ports iports_TOP = {};
     cadmium::dynamic::modeling::Ports oports_TOP = {
-        typeid(output_data),typeid(output_pack),typeid(output_ack)
+        typeid(output_data),typeid(output_pack),typeid(output_acknowledge)
     };
     cadmium::dynamic::modeling::Models submodels_TOP = {
         generator_con, generator_ack, sender1
