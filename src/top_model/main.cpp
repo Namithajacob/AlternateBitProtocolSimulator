@@ -1,5 +1,5 @@
-#define TOP_MODEL_OUTPUT "data/abp_output_0.txt"
 
+#define TOP_MODEL_OUTPUT "data/abp_output_0.txt"
 
 #include <iostream>
 #include <chrono>
@@ -259,11 +259,11 @@ int main(int argc, char ** argv){
 
     auto time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
     				std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Model Created. simulation_time time: " << time_elapsed << "sec" << endl;
+    cout << "Model Created. Elapsed time: " << time_elapsed << "sec" << endl;
     cadmium::dynamic::engine::runner<NDTime, logger_top> r(TOP, {0});
     time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
     		   std::ratio<1>>>(hclock::now() - start).count();
-    cout << "Runner Created. simulation_time time: " << time_elapsed << "sec" << endl;
+    cout << "Runner Created. Elapsed time: " << time_elapsed << "sec" << endl;
     cout << "Simulation starts" << endl;
     r.run_until(NDTime("04:00:00:000"));
     auto simulation_time = std::chrono::duration_cast<std::chrono::duration<double,
