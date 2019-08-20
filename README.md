@@ -48,6 +48,7 @@ from the received data after a time period.
 2. abp_output\_0.txt
 3. input_abp\_0.txt
 4. input_abp\_1.txt
+5. output.txt
 		 
 
 **doc** - This folder contains pdf documentation other than README.txt
@@ -63,6 +64,7 @@ from the received data after a time period.
 2. senderCadmium.hpp
 3. subnetCadmium.hpp
 4. message.hpp
+5. filter.hpp
 		 
 				
 **lib** - This folder contains third-party library files.
@@ -71,8 +73,7 @@ from the received data after a time period.
 2. DESTimes - This folder contains the DESTimes library files.
 3. vendor   - This folder contains third party vendor files.
     + include
-        * iestream.hpp
-        * NDTime.hpp 
+        * iestream.hpp 
 
 		 
 **src** - This folder contains the source files(.cpp).
@@ -80,7 +81,8 @@ from the received data after a time period.
 1. message 
     + message.cpp
 2. top_model
-    + main.cpp	 		
+    + main.cpp	 	
+3. text_filter.cpp [to modify the output]	
 
 **test** - This folder contains files for the unit tests.
 
@@ -88,13 +90,16 @@ from the received data after a time period.
     + receiver  - This folder contains input and output data for receiver
         * receiver_input\_test.txt
 		* receiver_test\_output.txt
+		* output.txt
 	+ sender - This folder contains input and output data for sender.
 	    * sender_input_test_ack\_In.txt
 	    * sender_input_test_control\_In.txt
 	    * sender_test\_output.txt
+	    * output.txt
 	+ subnet  - This folder contains input and output data for subnet.
 	    * subnet_input\_test.txt
 	    * subnet_test\_output.txt
+	    * output.txt
 	    
 2. src - This folder contains the source code(.cpp) files for the unit tests.
     + receiver - This folder contains source code for the receiver.

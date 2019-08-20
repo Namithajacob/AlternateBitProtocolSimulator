@@ -1,3 +1,4 @@
+
 /**
  * \brief This main file of subnet implements the operation of subnet model
  *  which can be used for testing.
@@ -22,6 +23,11 @@
 
 #define SUBNET_INPUT "test/data/subnet/subnet_input_test.txt"
 
+/**
+ * Defing the output file path for new file
+ */
+
+#define FILTER_OUTPUT  "test/data/subnet/output.txt"
 
 #include <iostream>
 #include <chrono>
@@ -40,16 +46,17 @@
 #include "../../../include/message.hpp"
 
 
-#include "../../../lib/DESTimes/include/NDTime.hpp"
+#include "../../../lib/vendor/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
 
 #include "../../../include/subnet_cadmium.hpp"
+
+#include "../../../src/text_filter.cpp"
 
 using namespace std;
 
 using hclock=chrono::high_resolution_clock;
 using TIME = NDTime;
-
 
 /**
  *  Sets input ports for message
@@ -81,8 +88,8 @@ class ApplicationGen : public iestream_input<message_t,T> {
     ApplicationGen() = default;
 
     /**
-     * The below constructor of ApplicationGen class takes the input file path for
-     * the Application generator
+     * The below parameterized constructor of ApplicationGen class
+     * takes the input file path for the Application generator
      */
 
     ApplicationGen(const char* file_path) : iestream_input<message_t,
@@ -91,6 +98,14 @@ class ApplicationGen : public iestream_input<message_t,T> {
 
 
 int main(){
+
+	/**
+	 * initializing the parameters for function
+	 */
+
+	const char *input_file = SUBNET_OUTPUT;
+	const char *output_file = FILTER_OUTPUT;
+
 
 	/**
 	 *  This variable will have the start time of simulation
@@ -206,15 +221,15 @@ int main(){
     );
 
     /**
-     * Creates a model and measures the time taken to create the model created.
+     * Creates a model and measures the time taken for creating this model.
      */
 
     auto time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
                     std::ratio<1>>>(hclock::now() - start).count();
     cout << "Model Created. Elapsed time: " << time_elapsed << "sec" << endl;
     
-    /*
-     *  This creates a runner and measures the time taken to create the same.
+    /**
+     * This creates a runner and measures the time taken for creating this runner.
      */
 
     cadmium::dynamic::engine::runner<NDTime, logger_top> r(TOP, {0});
@@ -232,5 +247,12 @@ int main(){
     auto simulation_time = std::chrono::duration_cast<std::chrono::duration<double,
                    std::ratio<1>>>(hclock::now() - start).count();
     cout << "Simulation took:" << simulation_time << "sec" << endl;
+
+    /**
+     * calling the function to generate new output file
+     */
+
+    output_filter(input_file,output_file);
+
     return 0;
 }
