@@ -73,7 +73,7 @@ void output_filter(const char *input,const char *output){
 	char *value;
 
 
-	//printf("HHERE");
+
 	/**
 	 * checking if there is any error in opening the out put file
 	 */
@@ -135,13 +135,17 @@ void output_filter(const char *input,const char *output){
 			while(for_port != NULL){
 				if(strstr(for_port,"output")){
 					strcpy(port,"output");
-				}else if(strstr(for_port,"data_")){
+				}
+				else if(strstr(for_port,"data_")){
 					strcpy(port,"data_out");
-				}else if(strstr(for_port,"packet_")){
+				}
+				else if(strstr(for_port,"packet_")){
 					strcpy(port,"packet_sent_out");
-				}else if(strstr(for_port,"ack_")){
+				}
+				else if(strstr(for_port,"ack_")){
 					strcpy(port,"ack_received_out");
-				}else if(strstr(for_port,"out")){
+				}
+				else if(strstr(for_port,"out")){
 					strcpy(port,"out");
 				}
 				/**<finds the occurrence of { in the line to find the port value*/

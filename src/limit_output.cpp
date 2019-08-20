@@ -74,19 +74,25 @@ void limit_output(const char *input, const char *output,...){
 			/**
 			 * reading he value for component from the file
 			 */
-			if(strstr(data,"generator_ack")){
+		    if(strstr(data,"generator_ack")){
 				strcpy(component,"generator_ack");
-			}else if(strstr(data,"receiver1")){
+			}
+			else if(strstr(data,"receiver1")){
 				strcpy(component,"receiver1");
-			}else if(strstr(data,"sender1")){
+			}
+			else if(strstr(data,"sender1")){
 				strcpy(component,"sender1");
-			}else if(strstr(data,"subnet1")){
+			}
+			else if(strstr(data,"subnet1")){
 				strcpy(component,"subnet1");
-			}else if(strstr(data,"subnet2")){
+			}
+			else if(strstr(data,"subnet2")){
 				strcpy(component,"subnet2");
-			}else if (strstr(data,"generator_con")){
+			}
+			else if (strstr(data,"generator_con")){
 				strcpy(component,"generator_con");
-			}else if (strstr(data,"generator")){
+			}
+			else if (strstr(data,"generator")){
 				strcpy(component,"generator");
 			}
 
@@ -95,13 +101,17 @@ void limit_output(const char *input, const char *output,...){
 			 */
 			if(strstr(data,"output")){
 				strcpy(port,"output");
-			}else if(strstr(data,"data_")){
+			}
+			else if(strstr(data,"data_")){
 				strcpy(port,"data_out");
-			}else if(strstr(data,"packet_sent_")){
+			}
+			else if(strstr(data,"packet_sent_")){
 				strcpy(port,"packet_sent_out");
-			}else if(strstr(data,"ack_received_")){
+			}
+			else if(strstr(data,"ack_received_")){
 				strcpy(port,"ack_received_");
-			}else if(strstr(data,"out")){
+			}
+			else if(strstr(data,"out")){
 				strcpy(port,"out");
 			}
 
