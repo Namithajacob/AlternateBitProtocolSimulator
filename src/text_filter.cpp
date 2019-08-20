@@ -73,7 +73,7 @@ void output_filter(const char *input,const char *output){
 	char *value;
 
 
-	//printf("HHERE");
+	
 	/**
 	 * checking if there is any error in opening the out put file
 	 */
