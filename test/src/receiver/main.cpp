@@ -1,8 +1,9 @@
+
 /**
  * \brief  This main file of receiver implements the
  * operation of receiver model which can be used for testing.
  *
- * receiver receive the data and send back an acknowledgement extracted
+ * receiver receive the data and send back an acknowledgment extracted
  * from the received data after a time period.
  * The Application generator takes file path as input and stores the
  * output data. It also generates the logs using Cadmium and
@@ -22,6 +23,12 @@
  */
 #define RECEIVER_OUTPUT  "test/data/receiver/receiver_test_output.txt"
 
+/**
+ * Defining path for new modified output
+ */
+
+#define FILTER_OUTPUT  "test/data/receiver/output.txt"
+
 #include <iostream>
 #include <chrono>
 #include <algorithm>
@@ -38,9 +45,11 @@
 #include <cadmium/logger/common_loggers.hpp>
 
 #include "../../../include/message.hpp"
-#include "../../../lib/DESTimes/include/NDTime.hpp"
+#include "../../../lib/vendor/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
 #include "../../../include/receiver_cadmium.hpp"
+
+#include "../../../src/text_filter.cpp"
 
 using namespace std;
 using hclock=chrono::high_resolution_clock;
@@ -76,8 +85,8 @@ class ApplicationGen : public iestream_input<message_t,T>{
     ApplicationGen() = default;
 
     /**
-     * The below constructor of ApplicationGen class takes the input file path for
-     * the Application generator
+     * The parameterized constructor of ApplicationGen class takes the input
+     * file path for the Application generator
      */
 
     ApplicationGen(const char* file_path) : iestream_input<message_t,
@@ -88,7 +97,15 @@ class ApplicationGen : public iestream_input<message_t,T>{
 int main(){
 
 	/**
-	 *  measures simulation execution time
+	 * initializing input parameters to pass to the function
+	 */
+
+	const char *input_file = RECEIVER_OUTPUT;
+	const char *output_file = FILTER_OUTPUT;
+
+
+	/**
+	 *  This variable will have the start time of simulation
 	 */
 
     auto start = hclock::now();
@@ -200,7 +217,7 @@ int main(){
     );
 
     /**
-     * Creates a model and measures the time taken to create the model created.
+     * Creates a model and measures the time taken for creating this model.
      */
 
     auto time_elapsed = std::chrono::duration_cast<std::chrono::duration<double,
@@ -208,7 +225,7 @@ int main(){
     cout << "Model Created. Elapsed time: " << time_elapsed << "sec" << endl;
 
     /**
-     *  This creates a runner and measures the time taken to create the same.
+     *  This creates a runner and measures the time taken for creating this runner.
      */
 
     cadmium::dynamic::engine::runner<NDTime, logger_top> r(TOP, {0});
@@ -225,5 +242,12 @@ int main(){
     auto simulation_time = std::chrono::duration_cast<std::chrono::duration<double,
     		       std::ratio<1>>>(hclock::now() - start).count();
     cout << "Simulation took:" << simulation_time << "sec" << endl;
+
+    /**
+     * calling the function to modify the existing output file
+     */
+
+    output_filter(input_file,output_file);
+
     return 0;
 }
