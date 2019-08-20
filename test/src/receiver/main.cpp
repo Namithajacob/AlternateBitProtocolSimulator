@@ -29,6 +29,12 @@
 
 #define FILTER_OUTPUT  "test/data/receiver/output.txt"
 
+/**
+ * Defining path for improved output file
+ */
+
+#define LIMIT_OUTPUT "test/data/receiver/limit_output.txt"
+
 #include <iostream>
 #include <chrono>
 #include <algorithm>
@@ -45,11 +51,15 @@
 #include <cadmium/logger/common_loggers.hpp>
 
 #include "../../../include/message.hpp"
-#include "../../../lib/vendor/include/NDTime.hpp"
+#include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
 #include "../../../include/receiver_cadmium.hpp"
 
 #include "../../../src/text_filter.cpp"
+#include "../../../src/limit_output.cpp"
+
+#include "../../../include/filter.hpp"
+#include "../../../include/limit.hpp"
 
 using namespace std;
 using hclock=chrono::high_resolution_clock;
@@ -102,6 +112,7 @@ int main(){
 
 	const char *input_file = RECEIVER_OUTPUT;
 	const char *output_file = FILTER_OUTPUT;
+	const char *limit_file = LIMIT_OUTPUT;
 
 
 	/**
@@ -248,6 +259,10 @@ int main(){
      */
 
     output_filter(input_file,output_file);
+
+    struct compare *c1;
+
+    limit_output(output_file,limit_file,c1);
 
     return 0;
 }

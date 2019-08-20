@@ -1,7 +1,7 @@
 
 #define TOP_MODEL_OUTPUT "data/abp_output_0.txt"
-
 #define FILTER_OUTPUT  "data/output.txt"
+#define LIMIT_OUTPUT  "data/limit_output.txt"
 
 #include <iostream>
 #include <chrono>
@@ -20,14 +20,17 @@
 #include "../../include/message.hpp"
 
 
-#include "../../lib/vendor/include/NDTime.hpp"
+#include "../../lib/DESTimes/include/NDTime.hpp"
 #include "../../lib/vendor/include/iestream.hpp"
 #include "../../include/receiver_cadmium.hpp"
 #include "../../include/sender_cadmium.hpp"
 #include "../../include/subnet_cadmium.hpp"
 
-#include "../text_filter.cpp"
+#include "../../src/text_filter.cpp"
+#include "../../src/limit_output.cpp"
 
+#include "../../include/limit.hpp"
+#include "../../include/filter.hpp"
 
 using namespace std;
 using hclock=chrono::high_resolution_clock;
@@ -60,9 +63,10 @@ class ApplicationGen : public iestream_input<message_t,T> {
 
 int main(int argc, char ** argv){
 
+
 	const char *input_file = TOP_MODEL_OUTPUT;
 	const char *output_file = FILTER_OUTPUT;
-
+	const char *limit_file = LIMIT_OUTPUT;
 
     if (argc < 2) {
         cout << "you are using this program with wrong parameters.";
@@ -279,6 +283,7 @@ int main(int argc, char ** argv){
     cout << "Simulation took:" << simulation_time << "sec" << endl;
 
     output_filter(input_file,output_file);
-
+    struct compare *c1;
+    limit_output(output_file,limit_file,c1);
     return 0;
 }

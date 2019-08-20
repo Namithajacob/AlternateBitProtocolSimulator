@@ -37,6 +37,12 @@
 
 #define FILTER_OUTPUT  "test/data/sender/output.txt"
 
+/**
+ * Defining the file path for the new modified output
+ */
+
+#define LIMIT_OUTPUT  "test/data/sender/limit_output.txt"
+
 
 
 
@@ -57,12 +63,16 @@
 #include "../../../include/message.hpp"
 
 
-#include "../../../lib/vendor/include/NDTime.hpp"
+#include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
 
 #include "../../../include/sender_cadmium.hpp"
 
 #include "../../../src/text_filter.cpp"
+#include "../../../src/limit_output.cpp"
+
+#include "../../../include/filter.hpp"
+#include "../../../include/limit.hpp"
 
 
 using namespace std;
@@ -136,6 +146,7 @@ int main(){
 
 	const char *input_file = SENDER_OUTPUT;
 	const char *output_file = FILTER_OUTPUT;
+	const char *limit_file = LIMIT_OUTPUT;
 
 
 	/**
@@ -308,6 +319,9 @@ int main(){
      */
 
     output_filter(input_file,output_file);
+
+    struct compare *c1;
+    limit_output(output_file,limit_file,c1);
 
 
     return 0;

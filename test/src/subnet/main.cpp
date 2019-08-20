@@ -29,6 +29,11 @@
 
 #define FILTER_OUTPUT  "test/data/subnet/output.txt"
 
+/**
+ * Defining the path for modified output as part of task e
+ */
+#define LIMIT_OUTPUT  "test/data/subnet/output.txt"
+
 #include <iostream>
 #include <chrono>
 #include <algorithm>
@@ -46,12 +51,16 @@
 #include "../../../include/message.hpp"
 
 
-#include "../../../lib/vendor/include/NDTime.hpp"
+#include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
 
 #include "../../../include/subnet_cadmium.hpp"
 
 #include "../../../src/text_filter.cpp"
+#include "../../../src/limit_output.cpp"
+
+#include "../../../include/filter.hpp"
+#include "../../../include/limit.hpp"
 
 using namespace std;
 
@@ -105,7 +114,7 @@ int main(){
 
 	const char *input_file = SUBNET_OUTPUT;
 	const char *output_file = FILTER_OUTPUT;
-
+	const char *limit_file = LIMIT_OUTPUT;
 
 	/**
 	 *  This variable will have the start time of simulation
@@ -253,6 +262,10 @@ int main(){
      */
 
     output_filter(input_file,output_file);
+
+    struct compare *c1;
+
+    limit_output(output_file,limit_file,c1);
 
     return 0;
 }

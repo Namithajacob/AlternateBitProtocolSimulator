@@ -49,6 +49,7 @@ from the received data after a time period.
 3. input_abp\_0.txt
 4. input_abp\_1.txt
 5. output.txt
+6. limit_output.txt
 		 
 
 **doc** - This folder contains pdf documentation other than README.txt
@@ -65,6 +66,7 @@ from the received data after a time period.
 3. subnetCadmium.hpp
 4. message.hpp
 5. filter.hpp
+6. limit.hpp
 		 
 				
 **lib** - This folder contains third-party library files.
@@ -83,6 +85,7 @@ from the received data after a time period.
 2. top_model
     + main.cpp	 	
 3. text_filter.cpp [to modify the output]	
+4. limit_output.hpp[to modify output from text_filter and limit the output based on structure elements]
 
 **test** - This folder contains files for the unit tests.
 
@@ -91,15 +94,18 @@ from the received data after a time period.
         * receiver_input\_test.txt
 		* receiver_test\_output.txt
 		* output.txt
+		* limit_output.txt
 	+ sender - This folder contains input and output data for sender.
 	    * sender_input_test_ack\_In.txt
 	    * sender_input_test_control\_In.txt
 	    * sender_test\_output.txt
 	    * output.txt
+	    * limit_output.txt
 	+ subnet  - This folder contains input and output data for subnet.
 	    * subnet_input\_test.txt
 	    * subnet_test\_output.txt
 	    * output.txt
+	    * limit_output.txt
 	    
 2. src - This folder contains the source code(.cpp) files for the unit tests.
     + receiver - This folder contains source code for the receiver.
@@ -137,6 +143,7 @@ alternatebitprotocol.doc contains the explanation of this simulator
 				./SUBNET_TEST	  
         * To check the output of the test, open  "../test/data/subnet_test\_output.txt"
     2. To run receiver and sender tests, the steps are analogous to 2.1.
+    3. To check the modified output, output file is stored under data folder.
 
 3. Run the simulator.
     1. Open the terminal.
