@@ -283,7 +283,7 @@ int main(int argc, char ** argv){
     cout << "Simulation took:" << simulation_time << "sec" << endl;
 
     output_filter(input_file,output_file);
-    struct compare *c1;
-    limit_output(output_file,limit_file,c1);
+    struct compare c1;
+    limit_output(output_file,limit_file,1,c1);
     return 0;
 }

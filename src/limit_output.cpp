@@ -3,8 +3,8 @@
  *  the output in to new file.
  *
  *  This code has a variable function, which has output file of previous task
- *  as input and output file to store new output and a structure as input.
- *   This function is called in
+ *  as input and output file to store new output, number of arguments passed
+ *   and a structure as input.This function is called in
  *  the main cpp of test source codes and top model source code.
  */
 
@@ -14,6 +14,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <stdarg.h>
 
 #include "../include/limit.hpp"
 
@@ -27,7 +28,7 @@
  *
  */
 
-void limit_output(const char *input, const char *output,...){
+void limit_output(const char *input, const char *output,int k,...){
 
 	/**<opening file pointers to do file operations*/
 	FILE *fp;
@@ -35,7 +36,9 @@ void limit_output(const char *input, const char *output,...){
 
 	int i,j;
 
-	struct compare c1;
+	va_list c1;
+	va_start(c1,k);
+	const auto c = va_arg(c1,compare);
 
 	/**<variables used to compare the strings*/
 	int result1,result2,result;
@@ -118,8 +121,8 @@ void limit_output(const char *input, const char *output,...){
 			/**
 			 * comparing the port and component with the values sored in structure
 			 */
-			result1 = strcmp(c1.port1,port);
-			result2 = strcmp(c1.component1,component);
+			result1 = strcmp(c.port1,port);
+			result2 = strcmp(c.component1,component);
 			result = result1+result2;
 
 			/**
@@ -131,7 +134,7 @@ void limit_output(const char *input, const char *output,...){
 			}
 		}
 	}
-
+	va_end(c1);
 	/**< closing the file*/
 	fclose(fp);
 	fclose(op);
