@@ -36,7 +36,10 @@ void limit_output(const char *input, const char *output,int k,...){
 
 	int i,j;
 
+	/**<creating variable list*/
 	va_list c1;
+
+	/**<associate new variable with parameter list*/
 	va_start(c1,k);
 	const auto c = va_arg(c1,compare);
 
@@ -134,6 +137,8 @@ void limit_output(const char *input, const char *output,int k,...){
 			}
 		}
 	}
+
+	/**<closing the va_list*/
 	va_end(c1);
 	/**< closing the file*/
 	fclose(fp);
