@@ -22,10 +22,10 @@
 /**
  * This function takes the input file and output file and a variable number of
  * inputs here we takes a structure as input and iterate through file and
- * filter the output accordingly.
+ * filter the output accordingly.This function uses concept of ellipsis.
  * @param input
  * @param output
- *
+ * @param k
  */
 
 void limit_output(const char *input, const char *output,int k,...){
@@ -111,11 +111,11 @@ void limit_output(const char *input, const char *output,int k,...){
 			else if(strstr(data,"data_")){
 				strcpy(port,"data_out");
 			}
-			else if(strstr(data,"packet_sent_")){
+			else if(strstr(data,"pack")){
 				strcpy(port,"packet_sent_out");
 			}
-			else if(strstr(data,"ack_received_")){
-				strcpy(port,"ack_received_");
+			else if(strstr(data,"ack")){
+				strcpy(port,"ack_received_out");
 			}
 			else if(strstr(data,"out")){
 				strcpy(port,"out");
