@@ -15,19 +15,19 @@
  * Defining the output file path
  */
 
-#define SUBNET_OUTPUT "test/data/subnet/subnet_test_output.txt"
+#define SUBNET_OUTPUT "../test/data/subnet/subnet_test_output.txt"
 
 /**
  * Defining the input file path
  */
 
-#define SUBNET_INPUT "test/data/subnet/subnet_input_test.txt"
+#define SUBNET_INPUT "../test/data/subnet/subnet_input_test.txt"
 
 /**
  * Defing the output file path for new file
  */
 
-#define FILTER_OUTPUT  "test/data/subnet/output.txt"
+#define FILTER_OUTPUT  "../test/data/subnet/output.txt"
 
 #include <iostream>
 #include <chrono>
@@ -103,8 +103,8 @@ int main(){
 	 * initializing the parameters for function
 	 */
 
-	const char *input_file = SUBNET_OUTPUT;
-	const char *output_file = FILTER_OUTPUT;
+	const char *p_input_file = SUBNET_OUTPUT;
+	const char *p_output_file = FILTER_OUTPUT;
 
 
 	/**
@@ -252,7 +252,7 @@ int main(){
      * calling the function to generate new output file
      */
 
-    output_filter(input_file,output_file);
+    output_filter(p_input_file,p_output_file);
 
     return 0;
 }

@@ -16,18 +16,18 @@
  * Defining the file path for input
  */
 
-#define RECEIVER_INPUT  "test/data/receiver/receiver_input_test.txt"
+#define RECEIVER_INPUT  "../test/data/receiver/receiver_input_test.txt"
 
 /**
  * Defining the sender output file path
  */
-#define RECEIVER_OUTPUT  "test/data/receiver/receiver_test_output.txt"
+#define RECEIVER_OUTPUT  "../test/data/receiver/receiver_test_output.txt"
 
 /**
  * Defining path for new modified output
  */
 
-#define FILTER_OUTPUT  "test/data/receiver/output.txt"
+#define FILTER_OUTPUT  "../test/data/receiver/output.txt"
 
 #include <iostream>
 #include <chrono>
@@ -100,8 +100,8 @@ int main(){
 	 * initializing input parameters to pass to the function
 	 */
 
-	const char *input_file = RECEIVER_OUTPUT;
-	const char *output_file = FILTER_OUTPUT;
+	const char *p_input_file = RECEIVER_OUTPUT;
+	const char *p_output_file = FILTER_OUTPUT;
 
 
 	/**
@@ -247,7 +247,7 @@ int main(){
      * calling the function to modify the existing output file
      */
 
-    output_filter(input_file,output_file);
+    output_filter(p_input_file,p_output_file);
 
     return 0;
 }

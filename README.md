@@ -48,7 +48,7 @@ from the received data after a time period.
 2. abp_output\_0.txt
 3. input_abp\_0.txt
 4. input_abp\_1.txt
-5. output.txt
+5. output.txt  - stores the organised output file
 		 
 
 **doc** - This folder contains pdf documentation other than README.txt
@@ -90,16 +90,16 @@ from the received data after a time period.
     + receiver  - This folder contains input and output data for receiver
         * receiver_input\_test.txt
 		* receiver_test\_output.txt
-		* output.txt
+		* output.txt - stores the organised output file
 	+ sender - This folder contains input and output data for sender.
 	    * sender_input_test_ack\_In.txt
 	    * sender_input_test_control\_In.txt
 	    * sender_test\_output.txt
-	    * output.txt
+	    * output.txt - stores the organised output file
 	+ subnet  - This folder contains input and output data for subnet.
 	    * subnet_input\_test.txt
 	    * subnet_test\_output.txt
-	    * output.txt
+	    * output.txt - stores the organised output file
 	    
 2. src - This folder contains the source code(.cpp) files for the unit tests.
     + receiver - This folder contains source code for the receiver.
