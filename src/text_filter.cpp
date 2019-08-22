@@ -21,19 +21,19 @@
  * @return ip
  */
 
-char* trim(char* ip){
+char* trim(char* p_ip){
 	int c;
 	int index;
 	index = -1;
 	c = 0;
-	while(ip[c] != '\0'){
-	    if(ip[c] != ' ' && ip[c] != '\t' && ip[c] != '\n'){
+	while(p_ip[c] != '\0'){
+	    if(p_ip[c] != ' ' && p_ip[c] != '\t' && p_ip[c] != '\n'){
 		    index = c;
 		}
 		c++;
 	}
-	ip[index+1] = '\0';
-	return ip;
+	p_ip[index+1] = '\0';
+	return p_ip;
 
 }
 
