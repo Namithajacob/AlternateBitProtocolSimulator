@@ -21,19 +21,19 @@
  * @return ip
  */
 
-char* trim(char* ip){
+char* trim(char* p_ip){
 	int c;
 	int index;
 	index = -1;
 	c = 0;
-	while(ip[c] != '\0'){
-	    if(ip[c] != ' ' && ip[c] != '\t' && ip[c] != '\n'){
+	while(p_ip[c] != '\0'){
+	    if(p_ip[c] != ' ' && p_ip[c] != '\t' && p_ip[c] != '\n'){
 		    index = c;
 		}
 		c++;
 	}
-	ip[index+1] = '\0';
-	return ip;
+	p_ip[index+1] = '\0';
+	return p_ip;
 
 }
 
@@ -67,10 +67,10 @@ void output_filter(const char *input,const char *output){
 	 * The below pointer to character is used to do various
 	 * operations on the file to get a pattern
 	 */
-	char *generated_by;
-	char *part1;
-	char *for_port;
-	char *value;
+	char *p_generated_by;
+	char *p_part1;
+	char *p_for_port;
+	char *p_value;
 
 
 
@@ -81,7 +81,7 @@ void output_filter(const char *input,const char *output){
 		printf("ERROR in opening file");
 	}
 
-	char first_line[500] = "TIME\t\t\tP_VALUE\t\t\tPORT\t\t\tCOMPONENT\n";
+	char first_line[500] = "TIME\t\t\t\tVALUE\t\t\t\tPORT\t\t\t\tCOMPONENT\n";
 	/**
 	 * writing the output headings to the output file
 	 */
@@ -110,54 +110,54 @@ void output_filter(const char *input,const char *output){
 		if(data[0] == '[' && data[1] != ']'){
 
 			/**<The input line is divided in to two part based on deliminator and store in two variables*/
-			part1 = strtok(data,"]");
-			generated_by = strtok(NULL,"]");
+			p_part1 = strtok(data,"]");
+			p_generated_by = strtok(NULL,"]");
 
 			/**
 			 * iterate through the generated_by part and find the component
 			 * and store it in a variable
 			 */
 
-			for(i=19,j=0;generated_by[i]!='\0' && generated_by[i]!='\n';i++,j++){
-				component[j] = generated_by[i];
+			for(i=19,j=0;p_generated_by[i]!='\0' && p_generated_by[i]!='\n';i++,j++){
+				component[j] = p_generated_by[i];
 			}
 			/**<this is to set the last element in array NULL character*/
 			component[j] = '\0';
 
 			/**<splits the part1 of the input line to find the port name*/
-			for_port = strtok(part1,",");
+			p_for_port = strtok(p_part1,",");
 
 			/**
 			 * while loop check whether the variable is not null and uses
 			 * strstr, which finds the first occurrence of substring in a string
 			 * to assign port value
 			 */
-			while(for_port != NULL){
-				if(strstr(for_port,"output")){
+			while(p_for_port != NULL){
+				if(strstr(p_for_port,"output")){
 					strcpy(port,"output");
 				}
-				else if(strstr(for_port,"data_")){
+				else if(strstr(p_for_port,"data_")){
 					strcpy(port,"data_out");
 				}
-				else if(strstr(for_port,"packet_")){
+				else if(strstr(p_for_port,"packet_")){
 					strcpy(port,"packet_sent_out");
 				}
-				else if(strstr(for_port,"ack_")){
+				else if(strstr(p_for_port,"ack_")){
 					strcpy(port,"ack_received_out");
 				}
-				else if(strstr(for_port,"out")){
+				else if(strstr(p_for_port,"out")){
 					strcpy(port,"out");
 				}
 				/**<finds the occurrence of { in the line to find the port value*/
-				value = strstr(for_port,"{");
+				p_value = strstr(p_for_port,"{");
 
 				/**
 				 * if the length of the value is greater than 2 then we use for
 				 * loop to iterate through the value till } and assigns port value.
 				 */
-				if(strlen(value)>2){
-					for(k=1,l=0;value[k]!='}';k++,l++){
-						port_value[l] = value[k];
+				if(strlen(p_value)>2){
+					for(k=1,l=0;p_value[k]!='}';k++,l++){
+						port_value[l] = p_value[k];
 					}
 					port_value[l] = '\0';
 
@@ -171,7 +171,7 @@ void output_filter(const char *input,const char *output){
 				/**
 				 * This will again splits the line from the last pointer position.
 				 */
-				for_port = strtok(NULL,",");
+				p_for_port = strtok(NULL,",");
 			}
 		}
 	}

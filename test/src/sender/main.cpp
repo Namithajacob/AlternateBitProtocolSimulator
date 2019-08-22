@@ -17,31 +17,31 @@
  * Defining the file path for received acknowledgment signal
  */
 
-#define SENDER_INPUT_ACKNOWLEDGE "test/data/sender/sender_input_test_ack_In.txt"
+#define SENDER_INPUT_ACKNOWLEDGE "../test/data/sender/sender_input_test_ack_In.txt"
 
 /**
  * Defining the sender output file path
  */
 
-#define SENDER_OUTPUT "test/data/sender/sender_test_output.txt"
+#define SENDER_OUTPUT "../test/data/sender/sender_test_output.txt"
 
 /**
  * Defining the file path for the input control signals
  */
 
-#define SENDER_CONTROL "test/data/sender/sender_input_test_control_In.txt"
+#define SENDER_CONTROL "../test/data/sender/sender_input_test_control_In.txt"
 
 /**
  * Defining the file path for the new output file
  */
 
-#define FILTER_OUTPUT  "test/data/sender/output.txt"
+#define FILTER_OUTPUT  "../test/data/sender/output.txt"
 
 /**
  * Defining the file path for the new modified output
  */
 
-#define LIMIT_OUTPUT  "test/data/sender/limit_output.txt"
+#define LIMIT_OUTPUT  "../test/data/sender/limit_output.txt"
 
 
 
@@ -144,9 +144,9 @@ int main(){
 	 */
 
 
-	const char *input_file = SENDER_OUTPUT;
-	const char *output_file = FILTER_OUTPUT;
-	const char *limit_file = LIMIT_OUTPUT;
+	const char *p_input_file = SENDER_OUTPUT;
+	const char *p_output_file = FILTER_OUTPUT;
+	const char *p_limit_file = LIMIT_OUTPUT;
 
 
 	/**
@@ -318,10 +318,10 @@ int main(){
      * calling the function to generate new output file
      */
 
-    output_filter(input_file,output_file);
+    output_filter(p_input_file,p_output_file);
 
     struct compare c1;
-    limit_output(output_file,limit_file,1,c1);
+    limit_output(p_output_file,p_limit_file,1,c1);
 
 
     return 0;

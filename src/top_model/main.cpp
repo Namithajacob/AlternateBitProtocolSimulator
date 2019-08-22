@@ -1,7 +1,7 @@
 
-#define TOP_MODEL_OUTPUT "data/abp_output_0.txt"
-#define FILTER_OUTPUT  "data/output.txt"
-#define LIMIT_OUTPUT  "data/limit_output.txt"
+#define TOP_MODEL_OUTPUT "../data/abp_output_0.txt"
+#define FILTER_OUTPUT  "../data/output.txt"
+#define LIMIT_OUTPUT  "../data/limit_output.txt"
 
 #include <iostream>
 #include <chrono>
@@ -64,9 +64,9 @@ class ApplicationGen : public iestream_input<message_t,T> {
 int main(int argc, char ** argv){
 
 
-	const char *input_file = TOP_MODEL_OUTPUT;
-	const char *output_file = FILTER_OUTPUT;
-	const char *limit_file = LIMIT_OUTPUT;
+	const char *p_input_file = TOP_MODEL_OUTPUT;
+	const char *p_output_file = FILTER_OUTPUT;
+	const char *p_limit_file = LIMIT_OUTPUT;
 
     if (argc < 2) {
         cout << "you are using this program with wrong parameters.";
@@ -282,8 +282,8 @@ int main(int argc, char ** argv){
     			   std::ratio<1>>>(hclock::now() - start).count();
     cout << "Simulation took:" << simulation_time << "sec" << endl;
 
-    output_filter(input_file,output_file);
+    output_filter(p_input_file,p_output_file);
     struct compare c1;
-    limit_output(output_file,limit_file,1,c1);
+    limit_output(p_output_file,p_limit_file,1,c1);
     return 0;
 }

@@ -16,24 +16,24 @@
  * Defining the file path for input
  */
 
-#define RECEIVER_INPUT  "test/data/receiver/receiver_input_test.txt"
+#define RECEIVER_INPUT  "../test/data/receiver/receiver_input_test.txt"
 
 /**
  * Defining the sender output file path
  */
-#define RECEIVER_OUTPUT  "test/data/receiver/receiver_test_output.txt"
+#define RECEIVER_OUTPUT  "../test/data/receiver/receiver_test_output.txt"
 
 /**
  * Defining path for new modified output
  */
 
-#define FILTER_OUTPUT  "test/data/receiver/output.txt"
+#define FILTER_OUTPUT  "../test/data/receiver/output.txt"
 
 /**
  * Defining path for improved output file
  */
 
-#define LIMIT_OUTPUT "test/data/receiver/limit_output.txt"
+#define LIMIT_OUTPUT "../test/data/receiver/limit_output.txt"
 
 #include <iostream>
 #include <chrono>
@@ -110,9 +110,9 @@ int main(){
 	 * initializing input parameters to pass to the function
 	 */
 
-	const char *input_file = RECEIVER_OUTPUT;
-	const char *output_file = FILTER_OUTPUT;
-	const char *limit_file = LIMIT_OUTPUT;
+	const char *p_input_file = RECEIVER_OUTPUT;
+	const char *p_output_file = FILTER_OUTPUT;
+	const char *p_limit_file = LIMIT_OUTPUT;
 
 
 	/**
@@ -258,11 +258,11 @@ int main(){
      * calling the function to modify the existing output file
      */
 
-    output_filter(input_file,output_file);
+    output_filter(p_input_file,p_output_file);
 
     struct compare c1;
 
-    limit_output(output_file,limit_file,1,c1);
+    limit_output(p_output_file,p_limit_file,1,c1);
 
     return 0;
 }

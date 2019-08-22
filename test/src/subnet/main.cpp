@@ -15,24 +15,24 @@
  * Defining the output file path
  */
 
-#define SUBNET_OUTPUT "test/data/subnet/subnet_test_output.txt"
+#define SUBNET_OUTPUT "../test/data/subnet/subnet_test_output.txt"
 
 /**
  * Defining the input file path
  */
 
-#define SUBNET_INPUT "test/data/subnet/subnet_input_test.txt"
+#define SUBNET_INPUT "../test/data/subnet/subnet_input_test.txt"
 
 /**
  * Defing the output file path for new file
  */
 
-#define FILTER_OUTPUT  "test/data/subnet/output.txt"
+#define FILTER_OUTPUT  "../test/data/subnet/output.txt"
 
 /**
  * Defining the path for modified output as part of task e
  */
-#define LIMIT_OUTPUT  "test/data/subnet/output.txt"
+#define LIMIT_OUTPUT  "../test/data/subnet/output.txt"
 
 #include <iostream>
 #include <chrono>
@@ -112,9 +112,9 @@ int main(){
 	 * initializing the parameters for function
 	 */
 
-	const char *input_file = SUBNET_OUTPUT;
-	const char *output_file = FILTER_OUTPUT;
-	const char *limit_file = LIMIT_OUTPUT;
+	const char *p_input_file = SUBNET_OUTPUT;
+	const char *p_output_file = FILTER_OUTPUT;
+	const char *p_limit_file = LIMIT_OUTPUT;
 
 	/**
 	 *  This variable will have the start time of simulation
@@ -261,11 +261,11 @@ int main(){
      * calling the function to generate new output file
      */
 
-    output_filter(input_file,output_file);
+    output_filter(p_input_file,p_output_file);
 
     struct compare c1;
 
-    limit_output(output_file,limit_file,1,c1);
+    limit_output(p_output_file,p_limit_file,1,c1);
 
     return 0;
 }
