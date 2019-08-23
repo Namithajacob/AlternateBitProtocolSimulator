@@ -116,4 +116,5 @@ class Subnet{
         return os;
     }
 };
+
 #endif // __BOOST_SIMULATION_PDEVS_SUBNET_HPP__

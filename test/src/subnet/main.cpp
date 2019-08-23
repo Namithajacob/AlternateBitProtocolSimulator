@@ -23,11 +23,13 @@
 
 #define SUBNET_INPUT "../test/data/subnet/subnet_input_test.txt"
 
+
 /**
  * Defing the output file path for new file
  */
 
 #define FILTER_OUTPUT  "../test/data/subnet/output.txt"
+
 
 #include <iostream>
 #include <chrono>
