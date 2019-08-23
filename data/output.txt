@@ -1,4 +1,4 @@
-TIME			P_VALUE			PORT			COMPONENT
+TIME				VALUE			PORT				COMPONENT
 00:00:10:000       20                 out                 generator_con     
 00:00:20:000       1                  packet_sent_out     sender1           
 00:00:20:000       11                 data_out            sender1           
