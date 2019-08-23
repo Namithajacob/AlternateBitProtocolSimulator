@@ -1,0 +1,6 @@
+TIME		VALUE			PORT		COMPONENT
+00:00:30:000       1                ack_received_out    sender1           
+00:01:30:000       0                ack_received_out    sender1           
+00:01:55:000       1                ack_received_out    sender1           
+00:02:45:000       0                ack_received_out    sender1           
+00:02:55:000       1                ack_received_out    sender1           

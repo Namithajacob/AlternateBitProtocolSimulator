@@ -54,7 +54,7 @@ struct receiver_defs{
 template<typename TIME>
 class Receiver{
 
-	/**< putting definitions in context*/
+    /**< putting definitions in context*/
     using defs=receiver_defs;
     public:
     /**<This constant has the value of time delay between input and output*/
@@ -66,7 +66,7 @@ class Receiver{
      */
      
     Receiver() noexcept{
-    	PREPARATION_TIME  = TIME("00:00:10");
+        PREPARATION_TIME  = TIME("00:00:10");
         state.ack_num    = 0;
         state.sending     = false;
     }
@@ -107,7 +107,7 @@ class Receiver{
     void external_transition(TIME e,
         typename make_message_bags<input_ports>::type mbs) {
             if(get_messages<typename defs::input>(mbs).size()>1){
-        	    assert(false && "one message per time uniti");
+                assert(false && "one message per time uniti");
             }
             for(const auto &x : get_messages<typename defs::input>(mbs)){
                 state.ack_num = static_cast < int > (x.value);
@@ -124,7 +124,7 @@ class Receiver{
      */
      
     void confluence_transition(TIME e,
-    	typename make_message_bags<input_ports>::type mbs) {
+        typename make_message_bags<input_ports>::type mbs) {
         internal_transition();
         external_transition(TIME(), std::move(mbs));
     }
