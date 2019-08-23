@@ -15,8 +15,8 @@
  */
 
 struct compare{
-	char port1[500] = "ack_received_out";
-	char component1[500] = "sender1";
+    char port1[500] = "ack_received_out";
+    char component1[500] = "sender1";
 };
 
 /**
