@@ -144,8 +144,8 @@ void limit_output(const char *input, const char *output,int k,...){
         }
     }
     if(counter >= check){
-        printf("THERE IS NO MATCHING OUTPUT TO SHOW");
-    	fprintf(op,"THERE IS NO MATCHING OUTPUT TO SHOW");
+        printf("THERE IS NO MATCHING OUTPUT TO SHOW IN THE NEW FILE");
+    	fprintf(op,"THERE IS NO MATCHING OUTPUT TO SHOW IN THE NEW FILE");
     }
     /**<closing the va_list*/
     va_end(c1);
