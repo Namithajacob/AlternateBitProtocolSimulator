@@ -60,7 +60,7 @@ void limit_output(const char *input, const char *output,int k,...){
 	if(op == NULL){
 		printf("ERROR in opening file");
 	}
-	char first_line[500] = "TIME\t\t\t\tP_VALUE\t\t\tPORT\t\t\t\tCOMPONENT\n";
+	char first_line[500] = "TIME\t\tVALUE\t\t\tPORT\t\tCOMPONENT\n";
 	fputs(first_line, op);
 	if(fp == NULL){
 		printf("ERROR in opening file");
@@ -72,7 +72,7 @@ void limit_output(const char *input, const char *output,int k,...){
 	while(fgets(data,500,fp)!= NULL){
 
 		/**
-		 * this if loop check whether line read has "00:" string, then only the
+		 * This if loop check whether line read has "00:" string, then only the
 		 * following statements execute.
 		 */
 		if((strstr(data,"00:"))!= NULL){
