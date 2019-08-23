@@ -3,6 +3,7 @@
 #define FILTER_OUTPUT  "../data/output.txt"
 #define LIMIT_OUTPUT  "../data/limit_output.txt"
 
+
 #include <iostream>
 #include <chrono>
 #include <algorithm>
@@ -62,7 +63,6 @@ class ApplicationGen : public iestream_input<message_t,T> {
 
 
 int main(int argc, char ** argv){
-
 
     const char *p_input_file = TOP_MODEL_OUTPUT;
     const char *p_output_file = FILTER_OUTPUT;
@@ -283,7 +283,9 @@ int main(int argc, char ** argv){
     cout << "Simulation took:" << simulation_time << "sec" << endl;
 
     output_filter(p_input_file,p_output_file);
+
     struct compare c1;
     limit_output(p_output_file,p_limit_file,1,c1);
+
     return 0;
 }

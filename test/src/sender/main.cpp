@@ -35,6 +35,7 @@
  * Defining the file path for the new output file
  */
 
+
 #define FILTER_OUTPUT  "../test/data/sender/output.txt"
 
 /**
@@ -42,6 +43,7 @@
  */
 
 #define LIMIT_OUTPUT  "../test/data/sender/limit_output.txt"
+
 
 
 
@@ -144,9 +146,11 @@ int main(){
      */
 
 
+
     const char *p_input_file = SENDER_OUTPUT;
     const char *p_output_file = FILTER_OUTPUT;
     const char *p_limit_file = LIMIT_OUTPUT;
+
 
 
     /**
@@ -320,8 +324,10 @@ int main(){
 
     output_filter(p_input_file,p_output_file);
 
+
     struct compare c1;
     limit_output(p_output_file,p_limit_file,1,c1);
+
 
 
     return 0;

@@ -23,16 +23,19 @@
 
 #define SUBNET_INPUT "../test/data/subnet/subnet_input_test.txt"
 
+
 /**
  * Defining the output file path for new file
  */
 
 #define FILTER_OUTPUT  "../test/data/subnet/output.txt"
 
+
 /**
  * Defining the path for modified output as part of task e
  */
 #define LIMIT_OUTPUT  "../test/data/subnet/limit_output.txt"
+
 
 #include <iostream>
 #include <chrono>
@@ -108,9 +111,11 @@ class ApplicationGen : public iestream_input<message_t,T> {
 
 int main(){
 
+
     /**
      * initializing the parameters for function
      */
+
 
     const char *p_input_file = SUBNET_OUTPUT;
     const char *p_output_file = FILTER_OUTPUT;
@@ -263,9 +268,11 @@ int main(){
 
     output_filter(p_input_file,p_output_file);
 
+
     struct compare c1;
 
     limit_output(p_output_file,p_limit_file,1,c1);
+
 
     return 0;
 }

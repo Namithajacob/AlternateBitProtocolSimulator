@@ -29,11 +29,13 @@
 
 #define FILTER_OUTPUT  "../test/data/receiver/output.txt"
 
+
 /**
  * Defining path for improved output file
  */
 
 #define LIMIT_OUTPUT "../test/data/receiver/limit_output.txt"
+
 
 #include <iostream>
 #include <chrono>
@@ -110,9 +112,11 @@ int main(){
      * initializing input parameters to pass to the function
      */
 
+
     const char *p_input_file = RECEIVER_OUTPUT;
     const char *p_output_file = FILTER_OUTPUT;
     const char *p_limit_file = LIMIT_OUTPUT;
+
 
 
     /**
@@ -260,9 +264,11 @@ int main(){
 
     output_filter(p_input_file,p_output_file);
 
+
     struct compare c1;
 
     limit_output(p_output_file,p_limit_file,1,c1);
+
 
     return 0;
 }

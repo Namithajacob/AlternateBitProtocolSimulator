@@ -22,6 +22,7 @@
  */
 
 char* trim(char* p_ip){
+
     int c;
     int index;
     index = -1;
@@ -34,7 +35,6 @@ char* trim(char* p_ip){
     }
     p_ip[index+1] = '\0';
     return p_ip;
-
 }
 
 /**
@@ -45,6 +45,7 @@ char* trim(char* p_ip){
  */
 
 void output_filter(const char *input,const char *output){
+
 
     /**<This variables are used in various for loops for iteration*/
     int i,j,k,l;
