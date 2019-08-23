@@ -81,7 +81,7 @@ void output_filter(const char *input,const char *output){
 		printf("ERROR in opening file");
 	}
 
-	char first_line[500] = "TIME\t\t\t\tVALUE\t\t\t\tPORT\t\t\t\tCOMPONENT\n";
+	char first_line[500] = "TIME\t\t\t\tVALUE\t\t\tPORT\t\t\t\tCOMPONENT\n";
 	/**
 	 * writing the output headings to the output file
 	 */

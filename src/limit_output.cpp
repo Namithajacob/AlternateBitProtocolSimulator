@@ -60,7 +60,7 @@ void limit_output(const char *input, const char *output,int k,...){
 	if(op == NULL){
 		printf("ERROR in opening file");
 	}
-	char first_line[500] = "TIME\t\t\t\tP_VALUE\t\t\t\tPORT\t\t\t\tCOMPONENT\n";
+	char first_line[500] = "TIME\t\t\t\tP_VALUE\t\t\tPORT\t\t\t\tCOMPONENT\n";
 	fputs(first_line, op);
 	if(fp == NULL){
 		printf("ERROR in opening file");
