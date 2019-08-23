@@ -16,12 +16,18 @@
  * Defining the file path for input
  */
 
-#define RECEIVER_INPUT  "test/data/receiver/receiver_input_test.txt"
+#define RECEIVER_INPUT  "../test/data/receiver/receiver_input_test.txt"
 
 /**
  * Defining the sender output file path
  */
-#define RECEIVER_OUTPUT  "test/data/receiver/receiver_test_output.txt"
+#define RECEIVER_OUTPUT  "../test/data/receiver/receiver_test_output.txt"
+
+/**
+ * Defining path for new modified output
+ */
+
+#define FILTER_OUTPUT  "../test/data/receiver/output.txt"
 
 #include <iostream>
 #include <chrono>
@@ -39,9 +45,11 @@
 #include <cadmium/logger/common_loggers.hpp>
 
 #include "../../../include/message.hpp"
-#include "../../../lib/vendor/include/NDTime.hpp"
+#include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
 #include "../../../include/receiver_cadmium.hpp"
+
+#include "../../../src/text_filter.cpp"
 
 using namespace std;
 using hclock=chrono::high_resolution_clock;
@@ -87,6 +95,14 @@ class ApplicationGen : public iestream_input<message_t,T>{
 
 
 int main(){
+
+	/**
+	 * initializing input parameters to pass to the function
+	 */
+
+	const char *p_input_file = RECEIVER_OUTPUT;
+	const char *p_output_file = FILTER_OUTPUT;
+
 
 	/**
 	 *  This variable will have the start time of simulation
@@ -226,5 +242,12 @@ int main(){
     auto simulation_time = std::chrono::duration_cast<std::chrono::duration<double,
     		       std::ratio<1>>>(hclock::now() - start).count();
     cout << "Simulation took:" << simulation_time << "sec" << endl;
+
+    /**
+     * calling the function to modify the existing output file
+     */
+
+    output_filter(p_input_file,p_output_file);
+
     return 0;
 }

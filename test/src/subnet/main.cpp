@@ -15,13 +15,21 @@
  * Defining the output file path
  */
 
-#define SUBNET_OUTPUT "test/data/subnet/subnet_test_output.txt"
+#define SUBNET_OUTPUT "../test/data/subnet/subnet_test_output.txt"
 
 /**
  * Defining the input file path
  */
 
-#define SUBNET_INPUT "test/data/subnet/subnet_input_test.txt"
+#define SUBNET_INPUT "../test/data/subnet/subnet_input_test.txt"
+
+
+/**
+ * Defing the output file path for new file
+ */
+
+#define FILTER_OUTPUT  "../test/data/subnet/output.txt"
+
 
 #include <iostream>
 #include <chrono>
@@ -40,10 +48,12 @@
 #include "../../../include/message.hpp"
 
 
-#include "../../../lib/vendor/include/NDTime.hpp"
+#include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
 
 #include "../../../include/subnet_cadmium.hpp"
+
+#include "../../../src/text_filter.cpp"
 
 using namespace std;
 
@@ -90,6 +100,14 @@ class ApplicationGen : public iestream_input<message_t,T> {
 
 
 int main(){
+
+	/**
+	 * initializing the parameters for function
+	 */
+
+	const char *p_input_file = SUBNET_OUTPUT;
+	const char *p_output_file = FILTER_OUTPUT;
+
 
 	/**
 	 *  This variable will have the start time of simulation
@@ -231,5 +249,12 @@ int main(){
     auto simulation_time = std::chrono::duration_cast<std::chrono::duration<double,
                    std::ratio<1>>>(hclock::now() - start).count();
     cout << "Simulation took:" << simulation_time << "sec" << endl;
+
+    /**
+     * calling the function to generate new output file
+     */
+
+    output_filter(p_input_file,p_output_file);
+
     return 0;
 }

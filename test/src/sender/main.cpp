@@ -17,19 +17,27 @@
  * Defining the file path for received acknowledgment signal
  */
 
-#define SENDER_INPUT_ACKNOWLEDGE "test/data/sender/sender_input_test_ack_In.txt"
+#define SENDER_INPUT_ACKNOWLEDGE "../test/data/sender/sender_input_test_ack_In.txt"
 
 /**
  * Defining the sender output file path
  */
 
-#define SENDER_OUTPUT "test/data/sender/sender_test_output.txt"
+#define SENDER_OUTPUT "../test/data/sender/sender_test_output.txt"
 
 /**
  * Defining the file path for the input control signals
  */
 
-#define SENDER_CONTROL "test/data/sender/sender_input_test_control_In.txt"
+#define SENDER_CONTROL "../test/data/sender/sender_input_test_control_In.txt"
+
+/**
+ * Defining the file path for the new output file
+ */
+
+#define FILTER_OUTPUT  "../../../test/data/sender/output.txt"
+
+
 
 
 #include <iostream>
@@ -49,10 +57,13 @@
 #include "../../../include/message.hpp"
 
 
-#include "../../../lib/vendor/include/NDTime.hpp"
+#include "../../../lib/DESTimes/include/NDTime.hpp"
 #include "../../../lib/vendor/include/iestream.hpp"
 
 #include "../../../include/sender_cadmium.hpp"
+
+#include "../../../src/text_filter.cpp"
+
 
 using namespace std;
 
@@ -117,6 +128,15 @@ class ApplicationGen : public iestream_input<message_t,T> {
 
 
 int main(){
+
+	/**
+	 * initializing the parameters for the function.
+	 */
+
+
+	const char *p_input_file = SENDER_OUTPUT;
+	const char *p_output_file = FILTER_OUTPUT;
+
 
 	/**
 	 *  This variable will have the start time of simulation
@@ -282,5 +302,13 @@ int main(){
     auto simulation_time = std::chrono::duration_cast<std::chrono::duration<double,
     		       std::ratio<1>>>(hclock::now() - start).count();
     cout << "Simulation took:" << simulation_time << "sec" << endl;
+
+    /**
+     * calling the function to generate new output file
+     */
+
+    output_filter(p_input_file,p_output_file);
+
+
     return 0;
 }

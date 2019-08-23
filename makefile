@@ -5,6 +5,7 @@ CC=g++
 CFLAGS=-std=c++17
 
 INCLUDECADMIUM=-I lib/cadmium/include
+INCLUDEDESTIMES=-I lib/DESTimes/include
 
 all:build/receiver_text.o build/sender_text.o build/subnet_text.o build/main_text.o build/message.o
 	$(CC) -g -o bin/RECEIVER build/receiver_text.o build/message.o
