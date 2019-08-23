@@ -140,7 +140,7 @@ alternatebitprotocol.doc contains the explanation of this simulator
         * Inside the bin folder, type in the terminal "./NAME_OF_THE_COMPILED_FILE". For this specific test you need to type:
  
 
-				./SUBNET_TEST	  
+				./SUBNET.exe	  
         * To check the output of the test, open  "../test/data/subnet_test\_output.txt"
     2. To run receiver and sender tests, the steps are analogous to 2.1.
     3. To check the modified output, output file is stored under data folder.

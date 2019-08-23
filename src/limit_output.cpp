@@ -34,8 +34,10 @@ void limit_output(const char *input, const char *output,int k,...){
     FILE *fp;
     FILE *op;
 
-    int i,j;
 
+    int i,j,counter,check;
+    counter = 1;
+    check = 0;
     /**<creating variable list*/
     va_list c1;
 
@@ -57,6 +59,7 @@ void limit_output(const char *input, const char *output,int k,...){
     fp = fopen(input,"r");
     op = fopen(output,"w");
 
+
     if(op == NULL){
         printf("ERROR in opening file");
     }
@@ -70,7 +73,7 @@ void limit_output(const char *input, const char *output,int k,...){
      * This while loop reads the file line by line and do the operations.
      */
     while(fgets(data,500,fp)!= NULL){
-
+    	check++;
         /**
          * This if loop check whether line read has "00:" string, then only the
          * following statements execute.
@@ -135,9 +138,15 @@ void limit_output(const char *input, const char *output,int k,...){
 
                 fprintf(op,data);
             }
+            else{
+            	counter = counter+1;
+            }
         }
     }
-
+    if(counter >= check){
+        printf("THERE IS NO MATCHING OUTPUT TO SHOW");
+    	fprintf(op,"THERE IS NO MATCHING OUTPUT TO SHOW");
+    }
     /**<closing the va_list*/
     va_end(c1);
     /**< closing the file*/

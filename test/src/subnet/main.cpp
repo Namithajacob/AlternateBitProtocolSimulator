@@ -24,7 +24,7 @@
 #define SUBNET_INPUT "../test/data/subnet/subnet_input_test.txt"
 
 /**
- * Defing the output file path for new file
+ * Defining the output file path for new file
  */
 
 #define FILTER_OUTPUT  "../test/data/subnet/output.txt"
@@ -32,7 +32,7 @@
 /**
  * Defining the path for modified output as part of task e
  */
-#define LIMIT_OUTPUT  "../test/data/subnet/output.txt"
+#define LIMIT_OUTPUT  "../test/data/subnet/limit_output.txt"
 
 #include <iostream>
 #include <chrono>
