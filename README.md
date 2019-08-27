@@ -126,6 +126,12 @@ Each component using the “black box” testing method. Test cases are created 
 
 alternatebitprotocol.doc contains the explanation of this simulator
 
+ 
+1. Before running the simulator, you need to initalize and update cadmium and DESTimes submodules. For that run the following commands in terminal.
+
+				git submodule init;
+				git submodule update;
+
 1. Update include paths in the makefile in this folder and subfolders. You need to update the following lines:
     * INCLUDECADMIUM=-I ../../cadmium/include
     * Update the relative path to cadmium/include from the folder where the makefile is. You need to take into account where you copied the folder during the installation process.
