@@ -1,10 +1,12 @@
 /**
- * \brief This program converts the output files to meaningful files
+ * \brief This code converts the output files to meaningful files
  *
- * This program has a function output_filter which takes input and output
+ * This code has a function output_filter which takes input and output
  * files as arguments, it then read the input file line by line
  * and converts it in to tabular formats. this function is called in the
  * main cpp file of receiver,sender,subnet and top_model.
+ *
+ * Output file is stored under data as output.txt
  *
  */
 
@@ -16,30 +18,38 @@
 #include "../include/filter.hpp"
 
 /**
- * This function is used to trim the tailing space in the input
- * @param ip of char
- * @return ip
+ * This function is used to trim the tailing space in the input.
+ * it takes a string p_input and trim all the tailing spaces to the right
+ * of the string.
+ * @param p_input
+ * @return p_input
  */
 
-char* trim(char* p_ip){
+char* trim(char* p_input){
 
     int c;
     int index;
     index = -1;
     c = 0;
-    while(p_ip[c] != '\0'){
-        if(p_ip[c] != ' ' && p_ip[c] != '\t' && p_ip[c] != '\n'){
+    while(p_input[c] != '\0'){
+        if(p_input[c] != ' ' && p_input[c] != '\t' && p_input[c] != '\n'){
             index = c;
         }
         c++;
     }
-    p_ip[index+1] = '\0';
-    return p_ip;
+    p_input[index+1] = '\0';
+    return p_input;
 }
 
 /**
  * This function is for arranging the unrecognizable output
- * in to a correct readable format.
+ * in to a correct readable format.This fuction will take unreadable output file
+ * as input and a new file to store the converted output file.
+ * This will read line by line from input file and match for any patterns and
+ * arrange it in a tabular form in the new output file.Here we are using strtok()
+ * which splits the input line based on any delimiter and strstr() which will
+ * searches the given string in the line and returns a pointer to the first
+ * occurrence of the given string.
  * @param input[]
  * @param output[]
  */

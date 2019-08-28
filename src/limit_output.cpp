@@ -2,10 +2,22 @@
  * \brief This code takes the  the output file of part D and limit
  *  the output in to new file.
  *
- *  This code has a variable function, which has output file of previous task
+ *  This code has a variable function, which has a readable output file
  *  as input and output file to store new output, number of arguments passed
- *   and a structure as input.This function is called in
- *  the main cpp of test source codes and top model source code.
+ *  and a structure variable as input.In the structure members we hold the
+ *  values which is used to filter the input file. The value to the structure
+ *  members is initialized in the main cpp files. For the user to change the
+ *  structure members for comparing different components, user can change 
+ *	it in main cpp files.This function is called in the main cpp of test source 
+ *	codes and top model source code.
+ *  The filtered output for top model is stored under
+ *  data folder -../data/limit_output.txt.For test, the output is stored under
+ *  test/data seperately under receiver,sender and subnet and name of the file
+ *  is limit_output.txt
+ *
+ *  If the structure member values and input file output values are not same
+ *  then, the new output file will be empty with a message
+ *  "THERE IS NO MATCHING OUTPUT TO SHOW IN THE NEW FILE"
  */
 
 #include <stdio.h>
@@ -21,8 +33,16 @@
 
 /**
  * This function takes the input file and output file and a variable number of
- * inputs here we takes a structure as input and iterate through file and
+ * inputs. Here, we takes a structure variable as input and iterate through file and
  * filter the output accordingly.This function uses concept of ellipsis.
+ * The function filters the output based on the structure members, which is
+ * initialized in the main cpp files. We pass a structure variable to this
+ * function as a variable parameter which is used to get the structure member
+ * values and to compare with the input file and write to new file if and only
+ * if the structure member values are equal to port and component value of the
+ * input file.
+ * The function uses pattern matching in the input file to get the string and to
+ * compare with the structure members.
  * @param input
  * @param output
  * @param k
