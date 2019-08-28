@@ -264,9 +264,16 @@ int main(){
 
     output_filter(p_input_file,p_output_file);
 
-
+    /**
+     * initializing structure variable with values to compare
+     */
     struct compare c1;
+    strcpy(c1.port1,"ack_received_out");
+    strcpy(c1.component1,"sender1");
 
+    /**
+     * calling function to filter the output based on structure members
+     */
     limit_output(p_output_file,p_limit_file,1,c1);
 
 
